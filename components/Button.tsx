@@ -21,37 +21,10 @@ export default function Button({
    variant = "primary",
    ...props
 }: PressableProps & ButtonProps) {
-   const buttonStyles: StyleProp<ViewStyle>[] = [styles.buttonBase];
-   const textStyles: StyleProp<TextStyle>[] = [styles.buttonText];
-
-   let pressedStyle: StyleProp<ViewStyle>;
-
-   if (variant === "primary") {
-      buttonStyles.push(styles.primaryButton);
-      textStyles.push(styles.primaryText);
-      pressedStyle = styles.pressedPrimary;
-   } else if (variant === "social") {
-      buttonStyles.push(styles.socialButton);
-      textStyles.push(styles.socialText);
-      pressedStyle = styles.pressedSocial;
-   } else {
-      buttonStyles.push(styles.socialAltButton);
-      textStyles.push(styles.socialAltText);
-      pressedStyle = styles.pressedSocialAlt;
-   }
-
-   const combinedButtonStyle =
-      typeof style === "function"
-         ? (state: PressableStateCallbackType) =>
-              [
-                 buttonStyles,
-                 state.pressed ? pressedStyle : null,
-                 style(state),
-              ].filter(Boolean)
-         : (state: PressableStateCallbackType) =>
-              [buttonStyles, state.pressed ? pressedStyle : null, style].filter(
-                 Boolean,
-              );
+   const { combinedButtonStyle, textStyles } = getButtonVariantStyles(
+      variant,
+      style,
+   );
 
    return (
       <Pressable
@@ -62,6 +35,24 @@ export default function Button({
       </Pressable>
    );
 }
+
+const getButtonVariantStyles = (
+   variant: "primary" | "social" | "socialAlt",
+   style?: PressableProps["style"],
+) => {
+   const { button, text, pressed } = variantStyles[variant];
+   const buttonStyles: StyleProp<ViewStyle>[] = [styles.buttonBase, button];
+   const textStyles: StyleProp<TextStyle>[] = [styles.buttonText, text];
+
+   const combinedButtonStyle = (state: PressableStateCallbackType) =>
+      [
+         buttonStyles,
+         state.pressed ? pressed : null,
+         typeof style === "function" ? style(state) : style,
+      ].filter(Boolean);
+
+   return { combinedButtonStyle, textStyles };
+};
 
 const styles = StyleSheet.create({
    buttonBase: {
@@ -106,3 +97,21 @@ const styles = StyleSheet.create({
       color: theme.colors.text,
    },
 });
+
+const variantStyles = {
+   primary: {
+      button: styles.primaryButton,
+      text: styles.primaryText,
+      pressed: styles.pressedPrimary,
+   },
+   social: {
+      button: styles.socialButton,
+      text: styles.socialText,
+      pressed: styles.pressedSocial,
+   },
+   socialAlt: {
+      button: styles.socialAltButton,
+      text: styles.socialAltText,
+      pressed: styles.pressedSocialAlt,
+   },
+} as const;
