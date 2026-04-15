@@ -1,22 +1,4 @@
-export const theme = {
-   colors: {
-      background: "#0a0f1f",
-      card: "#111a35",
-      text: "#ffffff",
-      textSecondary: "#c2c7d4",
-      textMuted: "#9aa3b6",
-      inputBackground: "#161f38",
-      inputText: "#f7f9ff",
-      placeholder: "#888",
-      primary: "#5178ee",
-      socialButton: "#ffffff",
-      socialButtonAlt: "#1f2842",
-      socialText: "#111a35",
-      orText: "#7380a1",
-      footerText: "#7a86a0",
-      footerLink: "#d1e1ff",
-      shadow: "#000",
-   },
+const commonTheme = {
    borderRadius: {
       card: 24,
       input: 16,
@@ -58,3 +40,49 @@ export const theme = {
       elevation: 10,
    },
 };
+
+const lightTheme = {
+   colors: {
+      background: "#ffffff",
+      card: "#ffffff",
+      text: "#000000",
+      textSecondary: "#6c757d",
+      textMuted: "#6c757d",
+      inputBackground: "#ffffff",
+      inputText: "#000000",
+      placeholder: "#6c757d",
+      primary: "#007bff",
+      socialButton: "#ffffff",
+      socialButtonAlt: "#f8f9fa",
+      socialText: "#000000",
+      orText: "#6c757d",
+      footerText: "#6c757d",
+      footerLink: "#007bff",
+      shadow: "#000",
+   },
+};
+
+const darkTheme = {
+   colors: {
+      background: "#0a0f1f",
+      card: "#111a35",
+      text: "#ffffff",
+      textSecondary: "#c2c7d4",
+      textMuted: "#9aa3b6",
+      inputBackground: "#161f38",
+      inputText: "#f7f9ff",
+      placeholder: "#888",
+      primary: "#5178ee",
+      socialButton: "#ffffff",
+      socialButtonAlt: "#1f2842",
+      socialText: "#111a35",
+      orText: "#7380a1",
+      footerText: "#7a86a0",
+      footerLink: "#d1e1ff",
+      shadow: "#000",
+   },
+};
+
+const theme = { ...commonTheme, ...darkTheme };
+
+export default theme;
