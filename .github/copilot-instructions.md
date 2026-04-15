@@ -21,6 +21,7 @@
 
 - Use clear, explicit naming over cleverness.
 - Optimize for someone reading the code for the first time.
+- Always put styleSheet at bottom of file.
 
 ## Scope Control
 
