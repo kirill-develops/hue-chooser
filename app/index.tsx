@@ -1,3 +1,4 @@
+import { theme } from "@/theme";
 import { useState } from "react";
 import {
    Alert,
@@ -29,7 +30,7 @@ export default function Index() {
                <TextInput
                   style={styles.input}
                   placeholder="you@example.com"
-                  placeholderTextColor="#888"
+                  placeholderTextColor={theme.colors.placeholder}
                   keyboardType="email-address"
                   autoCapitalize="none"
                   value={email}
@@ -42,14 +43,17 @@ export default function Index() {
                <TextInput
                   style={styles.input}
                   placeholder="Enter your password"
-                  placeholderTextColor="#888"
+                  placeholderTextColor={theme.colors.placeholder}
                   secureTextEntry
                   value={password}
                   onChangeText={setPassword}
                />
             </View>
 
-            <Pressable style={styles.primaryButton} onPress={handleSignIn}>
+            <Pressable
+               style={styles.primaryButton}
+               onPress={handleSignIn}
+            >
                <Text style={styles.primaryButtonText}>Sign in</Text>
             </Pressable>
 
@@ -78,104 +82,104 @@ export default function Index() {
 const styles = StyleSheet.create({
    page: {
       flex: 1,
-      backgroundColor: "#0a0f1f",
+      backgroundColor: theme.colors.background,
       justifyContent: "center",
-      paddingHorizontal: 24,
+      paddingHorizontal: theme.spacing.pagePadding,
    },
    card: {
-      backgroundColor: "#111a35",
-      borderRadius: 24,
-      padding: 28,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 12 },
-      shadowOpacity: 0.2,
-      shadowRadius: 24,
-      elevation: 10,
+      backgroundColor: theme.colors.card,
+      borderRadius: theme.borderRadius.card,
+      padding: theme.spacing.cardPadding,
+      shadowColor: theme.colors.shadow,
+      shadowOffset: theme.shadow.offset,
+      shadowOpacity: theme.shadow.opacity,
+      shadowRadius: theme.shadow.radius,
+      elevation: theme.shadow.elevation,
    },
    title: {
-      color: "#ffffff",
-      fontSize: 28,
-      fontWeight: "700",
-      marginBottom: 8,
+      color: theme.colors.text,
+      fontSize: theme.fontSize.title,
+      fontWeight: theme.fontWeight.bold,
+      marginBottom: theme.spacing.marginBottomTitle,
    },
    subtitle: {
-      color: "#c2c7d4",
-      fontSize: 15,
+      color: theme.colors.textSecondary,
+      fontSize: theme.fontSize.subtitle,
       lineHeight: 22,
-      marginBottom: 24,
+      marginBottom: theme.spacing.marginBottomSubtitle,
    },
    inputGroup: {
-      marginBottom: 16,
+      marginBottom: theme.spacing.marginBottomInputGroup,
    },
    label: {
-      color: "#9aa3b6",
-      marginBottom: 8,
-      fontSize: 13,
+      color: theme.colors.textMuted,
+      marginBottom: theme.spacing.marginBottomLabel,
+      fontSize: theme.fontSize.label,
       textTransform: "uppercase",
       letterSpacing: 0.8,
    },
    input: {
-      backgroundColor: "#161f38",
-      borderRadius: 16,
-      color: "#f7f9ff",
-      paddingHorizontal: 16,
-      paddingVertical: 14,
-      fontSize: 16,
+      backgroundColor: theme.colors.inputBackground,
+      borderRadius: theme.borderRadius.input,
+      color: theme.colors.inputText,
+      paddingHorizontal: theme.spacing.inputPaddingHorizontal,
+      paddingVertical: theme.spacing.inputPaddingVertical,
+      fontSize: theme.fontSize.input,
    },
    primaryButton: {
-      backgroundColor: "#5178ee",
-      borderRadius: 16,
-      paddingVertical: 16,
+      backgroundColor: theme.colors.primary,
+      borderRadius: theme.borderRadius.button,
+      paddingVertical: theme.spacing.buttonPaddingVertical,
       alignItems: "center",
-      marginTop: 8,
+      marginTop: theme.spacing.marginTopButton,
    },
    primaryButtonText: {
-      color: "#ffffff",
-      fontWeight: "700",
-      fontSize: 16,
+      color: theme.colors.text,
+      fontWeight: theme.fontWeight.bold,
+      fontSize: theme.fontSize.button,
    },
    orText: {
-      color: "#7380a1",
+      color: theme.colors.orText,
       textAlign: "center",
-      marginVertical: 18,
-      fontSize: 14,
+      marginVertical: theme.spacing.marginVerticalOr,
+      fontSize: theme.fontSize.or,
    },
    socialRow: {
       flexDirection: "column",
-      gap: 12,
+      gap: theme.spacing.gapSocialRow,
    },
    socialButton: {
-      backgroundColor: "#ffffff",
-      borderRadius: 16,
-      paddingVertical: 14,
+      backgroundColor: theme.colors.socialButton,
+      borderRadius: theme.borderRadius.button,
+      paddingVertical: theme.spacing.socialButtonPaddingVertical,
       alignItems: "center",
    },
    socialButtonAlt: {
-      backgroundColor: "#1f2842",
-      borderRadius: 16,
-      paddingVertical: 14,
+      backgroundColor: theme.colors.socialButtonAlt,
+      borderRadius: theme.borderRadius.button,
+      paddingVertical: theme.spacing.socialButtonPaddingVertical,
       alignItems: "center",
    },
    socialText: {
-      color: "#111a35",
-      fontWeight: "700",
-      fontSize: 15,
+      color: theme.colors.socialText,
+      fontWeight: theme.fontWeight.bold,
+      fontSize: theme.fontSize.social,
    },
    socialTextAlt: {
-      color: "#ffffff",
-      fontWeight: "700",
-      fontSize: 15,
+      color: theme.colors.text,
+      fontWeight: theme.fontWeight.bold,
+      fontSize: theme.fontSize.social,
    },
    footerRow: {
       flexDirection: "row",
       justifyContent: "space-between",
-      marginTop: 22,
+      marginTop: theme.spacing.marginTopFooter,
    },
    footerText: {
-      color: "#7a86a0",
-      fontSize: 13,
+      color: theme.colors.footerText,
+      fontSize: theme.fontSize.footer,
    },
    footerLink: {
-      color: "#d1e1ff",
+      color: theme.colors.footerLink,
    },
 });
