@@ -1,13 +1,8 @@
-import { theme } from "@/theme";
+import Button from "@/components/Button";
+import Input from "@/components/Input";
+import theme from "@/theme";
 import { useState } from "react";
-import {
-   Alert,
-   Pressable,
-   StyleSheet,
-   Text,
-   TextInput,
-   View,
-} from "react-native";
+import { Alert, StyleSheet, Text, View } from "react-native";
 
 export default function Index() {
    const [email, setEmail] = useState("");
@@ -27,10 +22,8 @@ export default function Index() {
 
             <View style={styles.inputGroup}>
                <Text style={styles.label}>Email</Text>
-               <TextInput
-                  style={styles.input}
+               <Input
                   placeholder="you@example.com"
-                  placeholderTextColor={theme.colors.placeholder}
                   keyboardType="email-address"
                   autoCapitalize="none"
                   value={email}
@@ -40,32 +33,33 @@ export default function Index() {
 
             <View style={styles.inputGroup}>
                <Text style={styles.label}>Password</Text>
-               <TextInput
-                  style={styles.input}
+               <Input
                   placeholder="Enter your password"
-                  placeholderTextColor={theme.colors.placeholder}
                   secureTextEntry
                   value={password}
                   onChangeText={setPassword}
                />
             </View>
 
-            <Pressable
-               style={styles.primaryButton}
+            <Button
+               title="Sign in"
                onPress={handleSignIn}
-            >
-               <Text style={styles.primaryButtonText}>Sign in</Text>
-            </Pressable>
+               variant="primary"
+            />
 
             <Text style={styles.orText}>or continue with</Text>
 
             <View style={styles.socialRow}>
-               <Pressable style={styles.socialButton}>
-                  <Text style={styles.socialText}>Sign in with Google</Text>
-               </Pressable>
-               <Pressable style={styles.socialButtonAlt}>
-                  <Text style={styles.socialTextAlt}>Sign in with Apple</Text>
-               </Pressable>
+               <Button
+                  title="Sign in with Google"
+                  onPress={() => {}}
+                  variant="social"
+               />
+               <Button
+                  title="Sign in with Apple"
+                  onPress={() => {}}
+                  variant="socialAlt"
+               />
             </View>
 
             <View style={styles.footerRow}>
@@ -118,26 +112,6 @@ const styles = StyleSheet.create({
       textTransform: "uppercase",
       letterSpacing: 0.8,
    },
-   input: {
-      backgroundColor: theme.colors.inputBackground,
-      borderRadius: theme.borderRadius.input,
-      color: theme.colors.inputText,
-      paddingHorizontal: theme.spacing.inputPaddingHorizontal,
-      paddingVertical: theme.spacing.inputPaddingVertical,
-      fontSize: theme.fontSize.input,
-   },
-   primaryButton: {
-      backgroundColor: theme.colors.primary,
-      borderRadius: theme.borderRadius.button,
-      paddingVertical: theme.spacing.buttonPaddingVertical,
-      alignItems: "center",
-      marginTop: theme.spacing.marginTopButton,
-   },
-   primaryButtonText: {
-      color: theme.colors.text,
-      fontWeight: theme.fontWeight.bold,
-      fontSize: theme.fontSize.button,
-   },
    orText: {
       color: theme.colors.orText,
       textAlign: "center",
@@ -147,28 +121,6 @@ const styles = StyleSheet.create({
    socialRow: {
       flexDirection: "column",
       gap: theme.spacing.gapSocialRow,
-   },
-   socialButton: {
-      backgroundColor: theme.colors.socialButton,
-      borderRadius: theme.borderRadius.button,
-      paddingVertical: theme.spacing.socialButtonPaddingVertical,
-      alignItems: "center",
-   },
-   socialButtonAlt: {
-      backgroundColor: theme.colors.socialButtonAlt,
-      borderRadius: theme.borderRadius.button,
-      paddingVertical: theme.spacing.socialButtonPaddingVertical,
-      alignItems: "center",
-   },
-   socialText: {
-      color: theme.colors.socialText,
-      fontWeight: theme.fontWeight.bold,
-      fontSize: theme.fontSize.social,
-   },
-   socialTextAlt: {
-      color: theme.colors.text,
-      fontWeight: theme.fontWeight.bold,
-      fontSize: theme.fontSize.social,
    },
    footerRow: {
       flexDirection: "row",
