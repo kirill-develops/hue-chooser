@@ -10,17 +10,17 @@ import {
    ViewStyle,
 } from "react-native";
 
-interface ButtonProps {
+type ButtonProps = PressableProps & {
    title: string;
    variant?: "primary" | "social" | "socialAlt";
-}
+};
 
 export default function Button({
    style,
    title,
    variant = "primary",
    ...props
-}: PressableProps & ButtonProps) {
+}:  ButtonProps) {
    const { combinedButtonStyle, textStyles } = getButtonVariantStyles(
       variant,
       style,
@@ -41,6 +41,7 @@ const getButtonVariantStyles = (
    style?: PressableProps["style"],
 ) => {
    const { button, text, pressed } = variantStyles[variant];
+   
    const buttonStyles: StyleProp<ViewStyle>[] = [styles.buttonBase, button];
    const textStyles: StyleProp<TextStyle>[] = [styles.buttonText, text];
 
