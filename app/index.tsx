@@ -25,8 +25,13 @@ export default function Index() {
    const [user, setUser] = useState<User | null>(null);
 
    const handleSignIn = () => {
-      Alert.alert("Sign In", `Email: ${email}\nPassword: ${password}`);
-      setUser({ email });
+      if (!!email && !!password) {
+         Alert.alert("Sign In", `Email: ${email}\nPassword: ${password}`);
+         setUser({ email });
+      } else {
+         Alert.alert("Error", "Please enter both email and password.");
+         return;
+      }
    };
 
    const handleSignOut = () => {
@@ -69,7 +74,6 @@ export default function Index() {
                   <Button
                      title="Sign in"
                      onPress={handleSignIn}
-                     variant="primary"
                   />
 
                   <OrText>or continue with</OrText>
@@ -90,11 +94,15 @@ export default function Index() {
             )}
 
             {!!user && (
-               <Button
-                  title="Sign out"
-                  onPress={handleSignOut}
-                  variant="primary"
-               />
+               <View style={styles.socialRow}>
+                  <Link href="/profile">Go to Dashboard</Link>
+
+                  <Button
+                     title="Sign out"
+                     onPress={handleSignOut}
+                     variant="secondary"
+                  />
+               </View>
             )}
 
             <View style={styles.footerRow}>
