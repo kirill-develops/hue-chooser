@@ -12,7 +12,7 @@ import {
 
 type ButtonProps = PressableProps & {
    title: string;
-   variant?: "primary" | "social" | "socialAlt";
+   variant?: "primary" | "secondary" | "social" | "socialAlt";
 };
 
 export default function Button({
@@ -20,7 +20,7 @@ export default function Button({
    title,
    variant = "primary",
    ...props
-}:  ButtonProps) {
+}: ButtonProps) {
    const { combinedButtonStyle, textStyles } = getButtonVariantStyles(
       variant,
       style,
@@ -37,11 +37,11 @@ export default function Button({
 }
 
 const getButtonVariantStyles = (
-   variant: "primary" | "social" | "socialAlt",
+   variant: "primary" | "secondary" | "social" | "socialAlt",
    style?: PressableProps["style"],
 ) => {
    const { button, text, pressed } = variantStyles[variant];
-   
+
    const buttonStyles: StyleProp<ViewStyle>[] = [styles.buttonBase, button];
    const textStyles: StyleProp<TextStyle>[] = [styles.buttonText, text];
 
@@ -65,6 +65,13 @@ const styles = StyleSheet.create({
       paddingVertical: theme.spacing.buttonPaddingVertical,
       marginTop: theme.spacing.marginTopButton,
    },
+   secondaryButton: {
+      backgroundColor: "transparent",
+      borderWidth: 1,
+      borderColor: theme.colors.primary,
+      paddingVertical: theme.spacing.buttonPaddingVertical,
+      marginTop: theme.spacing.marginTopButton,
+   },
    socialButton: {
       backgroundColor: theme.colors.socialButton,
       paddingVertical: theme.spacing.socialButtonPaddingVertical,
@@ -75,6 +82,9 @@ const styles = StyleSheet.create({
    },
    pressedPrimary: {
       opacity: 0.8,
+   },
+   pressedSecondary: {
+      opacity: 0.3,
    },
    pressedSocial: {
       opacity: 0.7,
@@ -88,6 +98,10 @@ const styles = StyleSheet.create({
    primaryText: {
       fontSize: theme.fontSize.button,
       color: theme.colors.text,
+   },
+   secondaryText: {
+      fontSize: theme.fontSize.button,
+      color: theme.colors.primary,
    },
    socialText: {
       fontSize: theme.fontSize.social,
@@ -104,6 +118,11 @@ const variantStyles = {
       button: styles.primaryButton,
       text: styles.primaryText,
       pressed: styles.pressedPrimary,
+   },
+   secondary: {
+      button: styles.secondaryButton,
+      text: styles.secondaryText,
+      pressed: styles.pressedSecondary,
    },
    social: {
       button: styles.socialButton,
