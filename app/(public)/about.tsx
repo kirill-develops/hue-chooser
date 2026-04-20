@@ -1,6 +1,17 @@
-import { Body, Card, FooterRow, Link, Screen, Subtitle, Title } from "@/components/UI";
+import {
+   Body,
+   Card,
+   FooterRow,
+   LinkText,
+   Screen,
+   Subtitle,
+   Title,
+} from "@/components/UI";
+import { useRouter } from "expo-router";
 
 function About() {
+   const router = useRouter();
+
    return (
       <Screen>
          <Card>
@@ -20,7 +31,7 @@ function About() {
             </Body>
 
             <FooterRow>
-               <Link href="/">Back to Home</Link>
+               <LinkText onPress={() => router.back()}>Back</LinkText>
             </FooterRow>
          </Card>
       </Screen>

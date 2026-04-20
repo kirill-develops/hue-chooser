@@ -4,17 +4,18 @@ import {
    FooterRow,
    FooterText,
    InputGroup,
-   Link,
+   LinkText,
    Screen,
    Subtitle,
    Title,
 } from "@/components/UI";
 import { useAuth } from "@/context/AuthContext";
-import theme from "@/theme";
+import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert } from "react-native";
 
 export default function SignUp() {
+   const router = useRouter();
    const { signup } = useAuth();
    const [name, setName] = useState("");
    const [email, setEmail] = useState("");
@@ -76,26 +77,11 @@ export default function SignUp() {
                onPress={handleSignUp}
             />
 
-            <View style={styles.dashboardRow}>
-               <Link href="/about">About Hue Chooser</Link>
-            </View>
-
             <FooterRow>
                <FooterText>Already have an account?</FooterText>
-               <Link href="/">Sign in</Link>
+               <LinkText onPress={() => router.back()}>Sign in</LinkText>
             </FooterRow>
          </Card>
       </Screen>
    );
 }
-
-const styles = StyleSheet.create({
-   socialRow: {
-      flexDirection: "column",
-      gap: theme.spacing.gapSocialRow,
-   },
-   dashboardRow: {
-      alignItems: "center",
-      marginVertical: theme.spacing.marginVerticalOr,
-   },
-});

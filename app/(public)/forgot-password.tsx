@@ -4,14 +4,17 @@ import {
    FooterRow,
    InputGroup,
    Link,
+   LinkText,
    Screen,
    Subtitle,
    Title,
 } from "@/components/UI";
+import { useRouter } from "expo-router";
 import { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 
 export default function ForgotPassword() {
+   const router = useRouter();
    const [email, setEmail] = useState("");
    const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -73,7 +76,16 @@ export default function ForgotPassword() {
                title="Send Reset Link"
                onPress={handleResetPassword}
             />
+            <FooterRow style={styles.FooterRow}>
+               <LinkText onPress={() => router.back()}>Sign In</LinkText>
+            </FooterRow>
          </Card>
       </Screen>
    );
 }
+
+const styles = StyleSheet.create({
+   FooterRow: {
+      justifyContent: "flex-end",
+   },
+});

@@ -7,6 +7,18 @@ export default function PublicLayout() {
             name="index"
             options={{ headerShown: false }}
          />
+         <Stack.Screen
+            name="signup"
+            options={{ headerShown: false, presentation: "modal" }}
+         />
+         <Stack.Screen
+            name="about"
+            options={{ headerShown: false, presentation: "modal" }}
+         />
+         <Stack.Screen
+            name="forgot-password"
+            options={{ headerShown: false, presentation: "modal" }}
+         />
       </Stack>
    );
 }

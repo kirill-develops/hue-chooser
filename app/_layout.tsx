@@ -1,6 +1,10 @@
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { Stack } from "expo-router";
 
+export const unstable_settings = {
+   anchor: "index", // Anchor to the index route
+};
+
 export default function RootLayout() {
    return (
       <AuthProvider>
