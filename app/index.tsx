@@ -10,32 +10,26 @@ import {
    Subtitle,
    Title,
 } from "@/components/UI";
+import { useAuth } from "@/context/AuthContext";
 import theme from "@/theme";
 import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 
-type User = {
-   email: string;
-};
-
 export default function Index() {
+   const { session, login, logout } = useAuth();
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
 
-   const [user, setUser] = useState<User | null>(null);
-
    const handleSignIn = () => {
       if (!!email && !!password) {
-         Alert.alert("Sign In", `Email: ${email}\nPassword: ${password}`);
-         setUser({ email });
+         login(email);
       } else {
          Alert.alert("Error", "Please enter both email and password.");
-         return;
       }
    };
 
    const handleSignOut = () => {
-      setUser(null);
+      logout();
    };
 
    return (
@@ -43,12 +37,12 @@ export default function Index() {
          <Card>
             <Title>Welcome back</Title>
             <Subtitle>
-               {user
-                  ? `Welcome back, ${user.email}!`
+               {session
+                  ? `Welcome back, ${session.user.email}!`
                   : "Sign in to continue to Hue Chooser."}
             </Subtitle>
 
-            {!user && (
+            {!session && (
                <>
                   <View style={styles.inputGroup}>
                      <Label>Email</Label>
@@ -93,7 +87,7 @@ export default function Index() {
                </>
             )}
 
-            {!!user && (
+            {!!session && (
                <View style={styles.socialRow}>
                   <View style={styles.dashboardRow}>
                      <Link href="/profile">Go to Dashboard</Link>
