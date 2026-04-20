@@ -95,8 +95,9 @@ export default function Index() {
 
             {!!user && (
                <View style={styles.socialRow}>
-                  <Link href="/profile">Go to Dashboard</Link>
-
+                  <View style={styles.dashboardRow}>
+                     <Link href="/profile">Go to Dashboard</Link>
+                  </View>
                   <Button
                      title="Sign out"
                      onPress={handleSignOut}
@@ -121,6 +122,10 @@ const styles = StyleSheet.create({
    socialRow: {
       flexDirection: "column",
       gap: theme.spacing.gapSocialRow,
+   },
+   dashboardRow: {
+      alignItems: "center",
+      marginBottom: theme.spacing.marginVerticalOr,
    },
    footerRow: {
       flexDirection: "row",
