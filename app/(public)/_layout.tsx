@@ -14,7 +14,7 @@ export default function PublicLayout() {
 
          <Stack.Screen
             name="forgot-password"
-            options={{ headerShown: false, presentation: "modal" }}
+            options={{ headerShown: false }}
          />
       </Stack>
    );

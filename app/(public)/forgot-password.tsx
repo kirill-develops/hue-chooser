@@ -4,7 +4,6 @@ import {
    FooterRow,
    InputGroup,
    Link,
-   LinkText,
    Screen,
    Subtitle,
    Title,
@@ -77,7 +76,7 @@ export default function ForgotPassword() {
                onPress={handleResetPassword}
             />
             <FooterRow style={styles.FooterRow}>
-               <LinkText onPress={() => router.back()}>Sign In</LinkText>
+               <Link href="/">Sign In</Link>
             </FooterRow>
          </Card>
       </Screen>
