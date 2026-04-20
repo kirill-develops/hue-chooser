@@ -1,9 +1,21 @@
 import theme from "@/theme";
 import { ReactNode } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, ViewProps } from "react-native";
 
-export function FooterRow({ children }: { children: ReactNode }) {
-   return <View style={styles.footerRow}>{children}</View>;
+type FooterRowProps = {
+   children: ReactNode;
+   style?: ViewProps["style"];
+};
+
+export function FooterRow({ children, style, ...props }: FooterRowProps) {
+   return (
+      <View
+         style={[styles.footerRow, style]}
+         {...props}
+      >
+         {children}
+      </View>
+   );
 }
 
 const styles = StyleSheet.create({
