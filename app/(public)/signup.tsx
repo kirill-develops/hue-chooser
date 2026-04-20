@@ -4,18 +4,16 @@ import {
    FooterRow,
    FooterText,
    InputGroup,
-   LinkText,
+   Link,
    Screen,
    Subtitle,
    Title,
 } from "@/components/UI";
 import { useAuth } from "@/context/AuthContext";
-import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert } from "react-native";
 
 export default function SignUp() {
-   const router = useRouter();
    const { signup } = useAuth();
    const [name, setName] = useState("");
    const [email, setEmail] = useState("");
@@ -79,7 +77,7 @@ export default function SignUp() {
 
             <FooterRow>
                <FooterText>Already have an account?</FooterText>
-               <LinkText onPress={() => router.back()}>Sign in</LinkText>
+               <Link href="/">Sign in</Link>
             </FooterRow>
          </Card>
       </Screen>

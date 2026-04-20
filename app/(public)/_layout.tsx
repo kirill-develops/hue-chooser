@@ -5,11 +5,11 @@ export default function PublicLayout() {
       <Stack>
          <Stack.Screen
             name="index"
-            options={{ headerShown: false }}
+            options={{ headerShown: false, animation: "slide_from_left" }}
          />
          <Stack.Screen
             name="signup"
-            options={{ headerShown: false, presentation: "modal" }}
+            options={{ headerShown: false }}
          />
 
          <Stack.Screen

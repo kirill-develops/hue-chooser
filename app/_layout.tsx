@@ -22,7 +22,10 @@ const App = () => {
             <Stack.Screen name="(app)" />
          </Stack.Protected>
          <Stack.Protected guard={!session}>
-            <Stack.Screen name="(public)" />
+            <Stack.Screen
+               name="(public)"
+               options={{ animation: "slide_from_left" }}
+            />
          </Stack.Protected>
          <Stack.Screen
             name="about"
