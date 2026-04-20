@@ -1,6 +1,7 @@
 import {
    Button,
    Card,
+   CardRow,
    FooterRow,
    InputGroup,
    Link,
@@ -32,7 +33,6 @@ export default function Index() {
          <Card>
             <Title>Welcome back</Title>
             <Subtitle>Sign in to continue to Hue Chooser.</Subtitle>
-
             <InputGroup
                label="Email"
                placeholder="you@example.com"
@@ -41,7 +41,6 @@ export default function Index() {
                value={email}
                onChangeText={setEmail}
             />
-
             <InputGroup
                label="Password"
                placeholder="Enter your password"
@@ -49,12 +48,10 @@ export default function Index() {
                value={password}
                onChangeText={setPassword}
             />
-
             <Button
                title="Sign in"
                onPress={handleSignIn}
             />
-
             <OrText>or continue with</OrText>
 
             <View style={styles.socialRow}>
@@ -69,11 +66,9 @@ export default function Index() {
                   variant="socialAlt"
                />
             </View>
-
-            <View style={styles.dashboardRow}>
+            <CardRow>
                <Link href="/about">About Hue Chooser</Link>
-            </View>
-
+            </CardRow>
             <FooterRow>
                <Link href="/forgot-password">Forgot password?</Link>
                <Link href="/signup">Create account</Link>
@@ -87,9 +82,5 @@ const styles = StyleSheet.create({
    socialRow: {
       flexDirection: "column",
       gap: theme.spacing.gapSocialRow,
-   },
-   dashboardRow: {
-      alignItems: "center",
-      marginVertical: theme.spacing.marginVerticalOr,
    },
 });

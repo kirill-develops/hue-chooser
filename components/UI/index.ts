@@ -1,6 +1,6 @@
 export { default as Button } from "./Button";
 export { default as Card } from "./Card";
-export { FooterRow } from "./FooterRow";
+export { default as CardRow } from "./CardRow";
 export { default as Input } from "./Input";
 export { InputGroup } from "./InputGroup";
 export { default as Link } from "./Link";
