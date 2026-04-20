@@ -1,9 +1,9 @@
+import { InputGroup } from "@/components/";
 import {
    Button,
    Card,
    FooterRow,
    FooterText,
-   InputGroup,
    Link,
    Screen,
    Subtitle,

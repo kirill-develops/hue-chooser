@@ -1,19 +1,17 @@
+import { InputGroup } from "@/components/";
 import {
    Button,
    Card,
    FooterRow,
-   InputGroup,
    Link,
    Screen,
    Subtitle,
    Title,
 } from "@/components/UI";
-import { useRouter } from "expo-router";
 import { useState } from "react";
 import { Alert, StyleSheet } from "react-native";
 
 export default function ForgotPassword() {
-   const router = useRouter();
    const [email, setEmail] = useState("");
    const [isSubmitted, setIsSubmitted] = useState(false);
 
