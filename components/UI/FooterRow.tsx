@@ -7,7 +7,11 @@ type FooterRowProps = {
    style?: ViewProps["style"];
 };
 
-export function FooterRow({ children, style, ...props }: FooterRowProps) {
+export default function FooterRow({
+   children,
+   style,
+   ...props
+}: FooterRowProps) {
    return (
       <View
          style={[styles.footerRow, style]}
