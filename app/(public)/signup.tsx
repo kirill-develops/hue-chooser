@@ -3,8 +3,7 @@ import {
    Card,
    FooterRow,
    FooterText,
-   Input,
-   Label,
+   InputGroup,
    Link,
    Screen,
    Subtitle,
@@ -40,45 +39,37 @@ export default function SignUp() {
             <Title>Create Account</Title>
             <Subtitle>Sign up to start using Hue Chooser.</Subtitle>
 
-            <View style={styles.inputGroup}>
-               <Label>Name</Label>
-               <Input
-                  placeholder="Your full name"
-                  value={name}
-                  onChangeText={setName}
-               />
-            </View>
+            <InputGroup
+               label="Name"
+               placeholder="Your full name"
+               value={name}
+               onChangeText={setName}
+            />
 
-            <View style={styles.inputGroup}>
-               <Label>Email</Label>
-               <Input
-                  placeholder="you@example.com"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  value={email}
-                  onChangeText={setEmail}
-               />
-            </View>
+            <InputGroup
+               label="Email"
+               placeholder="you@example.com"
+               keyboardType="email-address"
+               autoCapitalize="none"
+               value={email}
+               onChangeText={setEmail}
+            />
 
-            <View style={styles.inputGroup}>
-               <Label>Password</Label>
-               <Input
-                  placeholder="Create a password"
-                  secureTextEntry
-                  value={password}
-                  onChangeText={setPassword}
-               />
-            </View>
+            <InputGroup
+               label="Password"
+               placeholder="Create a password"
+               secureTextEntry
+               value={password}
+               onChangeText={setPassword}
+            />
 
-            <View style={styles.inputGroup}>
-               <Label>Confirm Password</Label>
-               <Input
-                  placeholder="Confirm your password"
-                  secureTextEntry
-                  value={confirmPassword}
-                  onChangeText={setConfirmPassword}
-               />
-            </View>
+            <InputGroup
+               label="Confirm Password"
+               placeholder="Confirm your password"
+               secureTextEntry
+               value={confirmPassword}
+               onChangeText={setConfirmPassword}
+            />
 
             <Button
                title="Sign up"
@@ -99,9 +90,6 @@ export default function SignUp() {
 }
 
 const styles = StyleSheet.create({
-   inputGroup: {
-      marginBottom: theme.spacing.marginBottomInputGroup,
-   },
    socialRow: {
       flexDirection: "column",
       gap: theme.spacing.gapSocialRow,

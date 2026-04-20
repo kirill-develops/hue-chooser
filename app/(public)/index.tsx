@@ -2,8 +2,7 @@ import {
    Button,
    Card,
    FooterRow,
-   Input,
-   Label,
+   InputGroup,
    Link,
    OrText,
    Screen,
@@ -34,26 +33,22 @@ export default function Index() {
             <Title>Welcome back</Title>
             <Subtitle>Sign in to continue to Hue Chooser.</Subtitle>
 
-            <View style={styles.inputGroup}>
-               <Label>Email</Label>
-               <Input
-                  placeholder="you@example.com"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  value={email}
-                  onChangeText={setEmail}
-               />
-            </View>
+            <InputGroup
+               label="Email"
+               placeholder="you@example.com"
+               keyboardType="email-address"
+               autoCapitalize="none"
+               value={email}
+               onChangeText={setEmail}
+            />
 
-            <View style={styles.inputGroup}>
-               <Label>Password</Label>
-               <Input
-                  placeholder="Enter your password"
-                  secureTextEntry
-                  value={password}
-                  onChangeText={setPassword}
-               />
-            </View>
+            <InputGroup
+               label="Password"
+               placeholder="Enter your password"
+               secureTextEntry
+               value={password}
+               onChangeText={setPassword}
+            />
 
             <Button
                title="Sign in"
@@ -89,9 +84,6 @@ export default function Index() {
 }
 
 const styles = StyleSheet.create({
-   inputGroup: {
-      marginBottom: theme.spacing.marginBottomInputGroup,
-   },
    socialRow: {
       flexDirection: "column",
       gap: theme.spacing.gapSocialRow,
@@ -99,10 +91,5 @@ const styles = StyleSheet.create({
    dashboardRow: {
       alignItems: "center",
       marginVertical: theme.spacing.marginVerticalOr,
-   },
-   footerRow: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      marginTop: theme.spacing.marginTopFooter,
    },
 });

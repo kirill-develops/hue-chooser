@@ -2,16 +2,14 @@ import {
    Button,
    Card,
    FooterRow,
-   Input,
-   Label,
+   InputGroup,
    Link,
    Screen,
    Subtitle,
    Title,
 } from "@/components/UI";
-import theme from "@/theme";
 import { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert } from "react-native";
 
 export default function ForgotPassword() {
    const [email, setEmail] = useState("");
@@ -62,16 +60,14 @@ export default function ForgotPassword() {
                send you a link to reset your password.
             </Subtitle>
 
-            <View style={styles.inputGroup}>
-               <Label>Email</Label>
-               <Input
-                  placeholder="you@example.com"
-                  keyboardType="email-address"
-                  autoCapitalize="none"
-                  value={email}
-                  onChangeText={setEmail}
-               />
-            </View>
+            <InputGroup
+               label="Email"
+               placeholder="you@example.com"
+               keyboardType="email-address"
+               autoCapitalize="none"
+               value={email}
+               onChangeText={setEmail}
+            />
 
             <Button
                title="Send Reset Link"
@@ -81,15 +77,3 @@ export default function ForgotPassword() {
       </Screen>
    );
 }
-
-const styles = StyleSheet.create({
-   inputGroup: {
-      marginBottom: theme.spacing.marginBottomInputGroup,
-   },
-   linkRow: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginTop: theme.spacing.marginTopFooter,
-   },
-});
