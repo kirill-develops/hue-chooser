@@ -5,7 +5,6 @@ import {
    Input,
    Label,
    Link,
-   OrText,
    Screen,
    Subtitle,
    Title,
@@ -15,24 +14,39 @@ import theme from "@/theme";
 import { useState } from "react";
 import { Alert, StyleSheet, View } from "react-native";
 
-export default function Index() {
-   const { login } = useAuth();
+export default function SignUp() {
+   const { signup } = useAuth();
+   const [name, setName] = useState("");
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
+   const [confirmPassword, setConfirmPassword] = useState("");
 
-   const handleSignIn = () => {
-      if (!!email && !!password) {
-         login(email);
-      } else {
-         Alert.alert("Error", "Please enter both email and password.");
+   const handleSignUp = () => {
+      if (!name || !email || !password || !confirmPassword) {
+         Alert.alert("Error", "Please fill in all fields.");
+         return;
       }
+      if (password !== confirmPassword) {
+         Alert.alert("Error", "Passwords do not match.");
+         return;
+      }
+      signup(name, email, password);
    };
 
    return (
       <Screen>
          <Card>
-            <Title>Welcome back</Title>
-            <Subtitle>Sign in to continue to Hue Chooser.</Subtitle>
+            <Title>Create Account</Title>
+            <Subtitle>Sign up to start using Hue Chooser.</Subtitle>
+
+            <View style={styles.inputGroup}>
+               <Label>Name</Label>
+               <Input
+                  placeholder="Your full name"
+                  value={name}
+                  onChangeText={setName}
+               />
+            </View>
 
             <View style={styles.inputGroup}>
                <Label>Email</Label>
@@ -48,40 +62,35 @@ export default function Index() {
             <View style={styles.inputGroup}>
                <Label>Password</Label>
                <Input
-                  placeholder="Enter your password"
+                  placeholder="Create a password"
                   secureTextEntry
                   value={password}
                   onChangeText={setPassword}
                />
             </View>
 
-            <Button
-               title="Sign in"
-               onPress={handleSignIn}
-            />
-
-            <OrText>or continue with</OrText>
-
-            <View style={styles.socialRow}>
-               <Button
-                  title="Sign in with Google"
-                  onPress={() => {}}
-                  variant="social"
-               />
-               <Button
-                  title="Sign in with Apple"
-                  onPress={() => {}}
-                  variant="socialAlt"
+            <View style={styles.inputGroup}>
+               <Label>Confirm Password</Label>
+               <Input
+                  placeholder="Confirm your password"
+                  secureTextEntry
+                  value={confirmPassword}
+                  onChangeText={setConfirmPassword}
                />
             </View>
+
+            <Button
+               title="Sign up"
+               onPress={handleSignUp}
+            />
 
             <View style={styles.dashboardRow}>
                <Link href="/about">About Hue Chooser</Link>
             </View>
 
             <View style={styles.footerRow}>
-               <FooterText>Forgot password?</FooterText>
-               <Link href="/signup">Create account</Link>
+               <FooterText>Already have an account?</FooterText>
+               <Link href="/">Sign in</Link>
             </View>
          </Card>
       </Screen>
