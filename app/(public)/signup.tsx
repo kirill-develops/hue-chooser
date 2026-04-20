@@ -1,6 +1,7 @@
 import {
    Button,
    Card,
+   FooterRow,
    FooterText,
    Input,
    Label,
@@ -88,10 +89,10 @@ export default function SignUp() {
                <Link href="/about">About Hue Chooser</Link>
             </View>
 
-            <View style={styles.footerRow}>
+            <FooterRow>
                <FooterText>Already have an account?</FooterText>
                <Link href="/">Sign in</Link>
-            </View>
+            </FooterRow>
          </Card>
       </Screen>
    );
@@ -108,10 +109,5 @@ const styles = StyleSheet.create({
    dashboardRow: {
       alignItems: "center",
       marginVertical: theme.spacing.marginVerticalOr,
-   },
-   footerRow: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      marginTop: theme.spacing.marginTopFooter,
    },
 });

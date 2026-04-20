@@ -1,6 +1,7 @@
 import {
    Button,
    Card,
+   FooterRow,
    Input,
    Label,
    Link,
@@ -78,10 +79,10 @@ export default function Index() {
                <Link href="/about">About Hue Chooser</Link>
             </View>
 
-            <View style={styles.footerRow}>
+            <FooterRow>
                <Link href="/forgot-password">Forgot password?</Link>
                <Link href="/signup">Create account</Link>
-            </View>
+            </FooterRow>
          </Card>
       </Screen>
    );

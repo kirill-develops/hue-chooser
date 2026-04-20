@@ -1,6 +1,7 @@
 import {
    Button,
    Card,
+   FooterRow,
    Input,
    Label,
    Link,
@@ -43,10 +44,10 @@ export default function ForgotPassword() {
                   <Button onPress={() => setIsSubmitted(false)}>Try again</Button>
                </View> */}
 
-               <View style={styles.linkRow}>
+               <FooterRow>
                   <Link href="/">Sign in</Link>
                   <Link href="/signup">Create account</Link>
-               </View>
+               </FooterRow>
             </Card>
          </Screen>
       );
