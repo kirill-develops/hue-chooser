@@ -24,6 +24,10 @@ const App = () => {
          <Stack.Protected guard={!session}>
             <Stack.Screen name="(public)" />
          </Stack.Protected>
+         <Stack.Screen
+            name="about"
+            options={{ headerShown: false, presentation: "modal" }}
+         />
       </Stack>
    );
 };
