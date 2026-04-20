@@ -1,7 +1,6 @@
 import {
    Button,
    Card,
-   FooterText,
    Input,
    Label,
    Link,
@@ -80,7 +79,7 @@ export default function Index() {
             </View>
 
             <View style={styles.footerRow}>
-               <FooterText>Forgot password?</FooterText>
+               <Link href="/forgot-password">Forgot password?</Link>
                <Link href="/signup">Create account</Link>
             </View>
          </Card>
