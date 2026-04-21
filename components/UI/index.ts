@@ -1,6 +1,7 @@
 export { default as Button } from "./Button";
 export { default as Card } from "./Card";
 export { default as CardRow } from "./CardRow";
+export * from "./EyeIcon";
 export { default as FooterRow } from "./FooterRow";
 export { default as Input } from "./Input";
 export { default as Link } from "./Link";
