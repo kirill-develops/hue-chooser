@@ -8,12 +8,19 @@ import {
    Title,
 } from "@/components/UI";
 import { useAuth } from "@/context/AuthContext";
+import { Alert } from "react-native";
 
 export default function Index() {
    const { session, logout } = useAuth();
 
-   const handleSignOut = () => {
-      logout();
+   const handleSignOut = async () => {
+      try {
+         await logout();
+      } catch (error) {
+         const message =
+            error instanceof Error ? error.message : "Please try again.";
+         Alert.alert("Logout Failed", message);
+      }
    };
 
    if (!session?.user) {

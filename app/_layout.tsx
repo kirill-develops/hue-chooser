@@ -14,7 +14,11 @@ export default function RootLayout() {
 }
 
 const App = () => {
-   const { session } = useAuth();
+   const { session, isSessionLoading } = useAuth();
+
+   if (isSessionLoading) {
+      return null;
+   }
 
    return (
       <Stack screenOptions={{ headerShown: false }}>

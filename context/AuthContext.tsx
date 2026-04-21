@@ -1,4 +1,11 @@
-import { createContext, ReactNode, useContext, useState } from "react";
+import * as SecureStore from "expo-secure-store";
+import {
+   createContext,
+   ReactNode,
+   useContext,
+   useEffect,
+   useState,
+} from "react";
 
 type User = {
    email: string;
@@ -11,30 +18,64 @@ type Session = {
 
 type AuthContextType = {
    session: Session | null;
-   login: (email: string) => void;
-   signup: (name: string, email: string, password: string) => void;
-   logout: () => void;
+   isSessionLoading: boolean;
+   login: (email: string) => Promise<void>;
+   signup: (name: string, email: string, password: string) => Promise<void>;
+   logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+const SESSION_STORAGE_KEY = "auth_session";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
    const [session, setSession] = useState<Session | null>(null);
+   const [isSessionLoading, setIsSessionLoading] = useState(true);
 
-   const login = (email: string) => {
-      setSession({ user: { email } });
+   useEffect(() => {
+      const loadSession = async () => {
+         try {
+            const storedSession =
+               await SecureStore.getItemAsync(SESSION_STORAGE_KEY);
+            if (storedSession) {
+               setSession(JSON.parse(storedSession) as Session);
+            }
+         } catch (error) {
+            console.warn("Failed to load session", error);
+         } finally {
+            setIsSessionLoading(false);
+         }
+      };
+
+      void loadSession();
+   }, []);
+
+   const login = async (email: string) => {
+      const nextSession = { user: { email } };
+      setSession(nextSession);
+      await SecureStore.setItemAsync(
+         SESSION_STORAGE_KEY,
+         JSON.stringify(nextSession),
+      );
    };
 
-   const signup = (name: string, email: string, password: string) => {
-      setSession({ user: { name, email } });
+   const signup = async (name: string, email: string, password: string) => {
+      const nextSession = { user: { name, email } };
+      setSession(nextSession);
+      await SecureStore.setItemAsync(
+         SESSION_STORAGE_KEY,
+         JSON.stringify(nextSession),
+      );
    };
 
-   const logout = () => {
+   const logout = async () => {
       setSession(null);
+      await SecureStore.deleteItemAsync(SESSION_STORAGE_KEY);
    };
 
    return (
-      <AuthContext.Provider value={{ session, login, signup, logout }}>
+      <AuthContext.Provider
+         value={{ session, isSessionLoading, login, signup, logout }}
+      >
          {children}
       </AuthContext.Provider>
    );

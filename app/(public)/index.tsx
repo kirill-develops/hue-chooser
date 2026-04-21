@@ -20,11 +20,18 @@ export default function Index() {
    const [email, setEmail] = useState("");
    const [password, setPassword] = useState("");
 
-   const handleSignIn = () => {
-      if (!!email && !!password) {
-         login(email);
-      } else {
+   const handleSignIn = async () => {
+      if (!email || !password) {
          Alert.alert("Error", "Please enter both email and password.");
+         return;
+      } else {
+         try {
+            await login(email);
+         } catch (error) {
+            const message =
+               error instanceof Error ? error.message : "Please try again.";
+            Alert.alert("Login Failed", message);
+         }
       }
    };
 
