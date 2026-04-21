@@ -26,7 +26,7 @@ export default function Index() {
          return;
       } else {
          try {
-            await login(email);
+            await login(email, password);
          } catch (error) {
             const message =
                error instanceof Error ? error.message : "Please try again.";

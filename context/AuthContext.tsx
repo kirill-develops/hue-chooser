@@ -1,4 +1,5 @@
-import * as SecureStore from "expo-secure-store";
+import { supabase } from "@/lib/supabase";
+import type { Session } from "@supabase/supabase-js";
 import {
    createContext,
    ReactNode,
@@ -6,70 +7,73 @@ import {
    useEffect,
    useState,
 } from "react";
-
-type User = {
-   email: string;
-   name?: string;
-};
-
-type Session = {
-   user: User;
-};
+import { AppState } from "react-native";
 
 type AuthContextType = {
    session: Session | null;
    isSessionLoading: boolean;
-   login: (email: string) => Promise<void>;
+   login: (email: string, password: string) => Promise<void>;
    signup: (name: string, email: string, password: string) => Promise<void>;
    logout: () => Promise<void>;
 };
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
-const SESSION_STORAGE_KEY = "auth_session";
 
 export function AuthProvider({ children }: { children: ReactNode }) {
    const [session, setSession] = useState<Session | null>(null);
    const [isSessionLoading, setIsSessionLoading] = useState(true);
 
    useEffect(() => {
-      const loadSession = async () => {
-         try {
-            const storedSession =
-               await SecureStore.getItemAsync(SESSION_STORAGE_KEY);
-            if (storedSession) {
-               setSession(JSON.parse(storedSession) as Session);
-            }
-         } catch (error) {
-            console.warn("Failed to load session", error);
-         } finally {
-            setIsSessionLoading(false);
-         }
-      };
+      const {
+         data: { subscription },
+      } = supabase.auth.onAuthStateChange((event, currentSession) => {
+         console.log("auth event:", event, "session:", currentSession);
+         setSession(currentSession);
+         setIsSessionLoading(false);
+      });
 
-      void loadSession();
+      AppState.addEventListener("change", (state) => {
+         if (state === "active") supabase.auth.startAutoRefresh();
+         else supabase.auth.stopAutoRefresh();
+      });
+
+      return () => {
+         subscription.unsubscribe();
+      };
    }, []);
 
-   const login = async (email: string) => {
-      const nextSession = { user: { email } };
-      setSession(nextSession);
-      await SecureStore.setItemAsync(
-         SESSION_STORAGE_KEY,
-         JSON.stringify(nextSession),
-      );
+   const login = async (email: string, password: string) => {
+      const { error } = await supabase.auth.signInWithPassword({
+         email,
+         password,
+      });
+      if (error) {
+         throw error;
+      }
    };
 
    const signup = async (name: string, email: string, password: string) => {
-      const nextSession = { user: { name, email } };
-      setSession(nextSession);
-      await SecureStore.setItemAsync(
-         SESSION_STORAGE_KEY,
-         JSON.stringify(nextSession),
-      );
+      const { data, error } = await supabase.auth.signUp({
+         email,
+         password,
+         options: {
+            data: { name },
+         },
+      });
+
+      if (error) {
+         throw error;
+      }
+
+      setSession(data.session);
    };
 
    const logout = async () => {
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+         throw error;
+      }
       setSession(null);
-      await SecureStore.deleteItemAsync(SESSION_STORAGE_KEY);
    };
 
    return (
