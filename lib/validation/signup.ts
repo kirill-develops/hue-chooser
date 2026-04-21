@@ -16,20 +16,27 @@ type SignUpValidationResult =
      };
 
 export function validateSignUpForm(form: SignUpForm): SignUpValidationResult {
-   const trimmedName = form.name.trim();
-   const trimmedEmail = form.email.trim();
-   const namePattern = /^[A-Za-z]+(?:[ '-][A-Za-z]+)+$/;
+   const namePattern = /^[A-Za-z]+(?:[-'][A-Za-z]+)*$/;
    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-   if (!trimmedName || !trimmedEmail || !form.password || !form.confirmPassword) {
+   if (!form.name || !form.email || !form.password || !form.confirmPassword) {
       return { isValid: false, error: "Please fill in all fields." };
    }
 
-   if (!namePattern.test(trimmedName)) {
-      return { isValid: false, error: "Please enter your real first and last name." };
+   if (
+      /\s/.test(form.name) ||
+      /\s/.test(form.email) ||
+      /\s/.test(form.password) ||
+      /\s/.test(form.confirmPassword)
+   ) {
+      return { isValid: false, error: "Spaces are not allowed in these fields." };
    }
 
-   if (!emailPattern.test(trimmedEmail)) {
+   if (!namePattern.test(form.name)) {
+      return { isValid: false, error: "Please enter a valid name without spaces." };
+   }
+
+   if (!emailPattern.test(form.email)) {
       return { isValid: false, error: "Please enter a valid email address." };
    }
 
@@ -44,8 +51,8 @@ export function validateSignUpForm(form: SignUpForm): SignUpValidationResult {
    return {
       isValid: true,
       value: {
-         name: trimmedName,
-         email: trimmedEmail,
+         name: form.name,
+         email: form.email,
          password: form.password,
       },
    };

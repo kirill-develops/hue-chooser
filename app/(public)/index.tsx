@@ -17,16 +17,25 @@ import { Alert, StyleSheet, View } from "react-native";
 
 export default function Index() {
    const { login } = useAuth();
-   const [email, setEmail] = useState("");
-   const [password, setPassword] = useState("");
+   const [form, setForm] = useState({
+      email: "",
+      password: "",
+   });
+
+   const handleFormUpdate = (field: keyof typeof form) => (value: string) => {
+      setForm((prev) => ({ ...prev, [field]: value }));
+   };
+
+   const handleGoogleSignIn = () => {};
+   const handleAppleSignIn = () => {};
 
    const handleSignIn = async () => {
-      if (!email || !password) {
+      if (!form.email || !form.password) {
          Alert.alert("Error", "Please enter both email and password.");
          return;
       } else {
          try {
-            await login(email, password);
+            await login(form.email, form.password);
          } catch (error) {
             const message =
                error instanceof Error ? error.message : "Please try again.";
@@ -43,17 +52,20 @@ export default function Index() {
             <InputGroup
                label="Email"
                placeholder="you@example.com"
+               textContentType="emailAddress"
+               autoComplete="email"
                keyboardType="email-address"
                autoCapitalize="none"
-               value={email}
-               onChangeText={setEmail}
+               value={form.email}
+               onChangeText={handleFormUpdate("email")}
             />
             <InputGroup
                label="Password"
                placeholder="Enter your password"
-               secureTextEntry
-               value={password}
-               onChangeText={setPassword}
+               textContentType="newPassword"
+               autoComplete="new-password"
+               value={form.password}
+               onChangeText={handleFormUpdate("password")}
             />
             <Button
                title="Sign in"
@@ -64,12 +76,12 @@ export default function Index() {
             <View style={styles.socialRow}>
                <Button
                   title="Sign in with Google"
-                  onPress={() => {}}
+                  onPress={handleGoogleSignIn}
                   variant="social"
                />
                <Button
                   title="Sign in with Apple"
-                  onPress={() => {}}
+                  onPress={handleAppleSignIn}
                   variant="socialAlt"
                />
             </View>

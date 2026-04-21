@@ -22,6 +22,9 @@ export default function SignUp() {
       password: "",
       confirmPassword: "",
    });
+   const handleFormUpdate = (field: keyof typeof form) => (value: string) => {
+      setForm((prev) => ({ ...prev, [field]: value }));
+   };
 
    const handleSignUp = async () => {
       const result = validateSignUpForm(form);
@@ -31,7 +34,11 @@ export default function SignUp() {
       }
 
       try {
-         await signup(result.value.name, result.value.email, result.value.password);
+         await signup(
+            result.value.name,
+            result.value.email,
+            result.value.password,
+         );
       } catch (error) {
          const message =
             error instanceof Error ? error.message : "Please try again.";
@@ -49,36 +56,36 @@ export default function SignUp() {
                label="Name"
                placeholder="Your full name"
                value={form.name}
-               onChangeText={(name) => setForm((prev) => ({ ...prev, name }))}
+               onChangeText={handleFormUpdate("name")}
             />
 
             <InputGroup
                label="Email"
                placeholder="you@example.com"
+               textContentType="emailAddress"
+               autoComplete="email"
                keyboardType="email-address"
                autoCapitalize="none"
                value={form.email}
-               onChangeText={(email) => setForm((prev) => ({ ...prev, email }))}
+               onChangeText={handleFormUpdate("email")}
             />
 
             <InputGroup
                label="Password"
                placeholder="Create a password"
-               secureTextEntry
+               textContentType="newPassword"
+               autoComplete="new-password"
                value={form.password}
-               onChangeText={(password) =>
-                  setForm((prev) => ({ ...prev, password }))
-               }
+               onChangeText={handleFormUpdate("password")}
             />
 
             <InputGroup
                label="Confirm Password"
                placeholder="Confirm your password"
-               secureTextEntry
+               textContentType="newPassword"
+               autoComplete="new-password"
                value={form.confirmPassword}
-               onChangeText={(confirmPassword) =>
-                  setForm((prev) => ({ ...prev, confirmPassword }))
-               }
+               onChangeText={handleFormUpdate("confirmPassword")}
             />
 
             <Button
