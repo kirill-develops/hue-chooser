@@ -17,7 +17,8 @@ export default function InputGroup({
    ...inputProps
 }: InputGroupProps) {
    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-   const isPassword = textContentType === "newPassword";
+   const isPassword =
+      textContentType === "newPassword" || textContentType === "password";
 
    const togglePasswordVisibility = () => {
       setIsPasswordVisible((visible) => !visible);

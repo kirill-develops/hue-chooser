@@ -56,14 +56,17 @@ export default function Index() {
                autoComplete="email"
                keyboardType="email-address"
                autoCapitalize="none"
+               autoCorrect={false}
                value={form.email}
                onChangeText={handleFormUpdate("email")}
             />
             <InputGroup
                label="Password"
                placeholder="Enter your password"
-               textContentType="newPassword"
-               autoComplete="new-password"
+               textContentType="password"
+               autoComplete="password"
+               autoCapitalize="none"
+               autoCorrect={false}
                value={form.password}
                onChangeText={handleFormUpdate("password")}
             />

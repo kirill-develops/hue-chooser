@@ -55,6 +55,9 @@ export default function SignUp() {
             <InputGroup
                label="Name"
                placeholder="Your full name"
+               textContentType="name"
+               autoComplete="name"
+               autoCorrect={false}
                value={form.name}
                onChangeText={handleFormUpdate("name")}
             />
@@ -66,6 +69,7 @@ export default function SignUp() {
                autoComplete="email"
                keyboardType="email-address"
                autoCapitalize="none"
+               autoCorrect={false}
                value={form.email}
                onChangeText={handleFormUpdate("email")}
             />
@@ -75,6 +79,8 @@ export default function SignUp() {
                placeholder="Create a password"
                textContentType="newPassword"
                autoComplete="new-password"
+               autoCapitalize="none"
+               autoCorrect={false}
                value={form.password}
                onChangeText={handleFormUpdate("password")}
             />
@@ -82,8 +88,10 @@ export default function SignUp() {
             <InputGroup
                label="Confirm Password"
                placeholder="Confirm your password"
-               textContentType="newPassword"
-               autoComplete="new-password"
+               textContentType="password"
+               autoComplete="password"
+               autoCapitalize="none"
+               autoCorrect={false}
                value={form.confirmPassword}
                onChangeText={handleFormUpdate("confirmPassword")}
             />
