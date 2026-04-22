@@ -32,12 +32,13 @@ export default function Index() {
          </Screen>
       );
    }
+   console.log(session.user.user_metadata.name);
 
    return (
       <Screen>
          <Card>
             <Title>Hue Chooser</Title>
-            <Subtitle>{`Signed in as ${session.user.email}!`}</Subtitle>
+            <Subtitle>{`Welcome back, ${session.user.user_metadata.name}!`}</Subtitle>
             <CardRow>
                <Link href="/profile">Go to Dashboard</Link>
             </CardRow>

@@ -51,7 +51,6 @@ export default function SignUp() {
          <Card>
             <Title>Create Account</Title>
             <Subtitle>Sign up to start using Hue Chooser.</Subtitle>
-
             <InputGroup
                label="Name"
                placeholder="Your full name"
@@ -61,7 +60,6 @@ export default function SignUp() {
                value={form.name}
                onChangeText={handleFormUpdate("name")}
             />
-
             <InputGroup
                label="Email"
                placeholder="you@example.com"
@@ -73,7 +71,6 @@ export default function SignUp() {
                value={form.email}
                onChangeText={handleFormUpdate("email")}
             />
-
             <InputGroup
                label="Password"
                placeholder="Create a password"
@@ -84,7 +81,6 @@ export default function SignUp() {
                value={form.password}
                onChangeText={handleFormUpdate("password")}
             />
-
             <InputGroup
                label="Confirm Password"
                placeholder="Confirm your password"
@@ -95,12 +91,10 @@ export default function SignUp() {
                value={form.confirmPassword}
                onChangeText={handleFormUpdate("confirmPassword")}
             />
-
             <Button
                title="Sign up"
                onPress={handleSignUp}
             />
-
             <FooterRow>
                <FooterText>Already have an account?</FooterText>
                <Link href="/">Sign in</Link>
