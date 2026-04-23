@@ -97,7 +97,12 @@ export default function SignUp() {
             />
             <FooterRow>
                <FooterText>Already have an account?</FooterText>
-               <Link href="/">Sign in</Link>
+               <Link
+                  href="/"
+                  dismissTo
+               >
+                  Sign in
+               </Link>
             </FooterRow>
          </Card>
       </Screen>

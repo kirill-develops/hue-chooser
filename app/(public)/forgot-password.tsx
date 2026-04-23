@@ -74,7 +74,12 @@ export default function ForgotPassword() {
                onPress={handleResetPassword}
             />
             <FooterRow style={styles.FooterRow}>
-               <Link href="/">Sign In</Link>
+               <Link
+                  href="/"
+                  dismissTo
+               >
+                  Sign In
+               </Link>
             </FooterRow>
          </Card>
       </Screen>
