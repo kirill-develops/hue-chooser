@@ -1,5 +1,14 @@
 import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
+
+const queryClient = new QueryClient({
+   defaultOptions: {
+      queries: {
+         staleTime: Infinity,
+      },
+   },
+});
 
 export const unstable_settings = {
    anchor: "index", // Anchor to the index route
@@ -7,9 +16,11 @@ export const unstable_settings = {
 
 export default function RootLayout() {
    return (
-      <AuthProvider>
-         <App />
-      </AuthProvider>
+      <QueryClientProvider client={queryClient}>
+         <AuthProvider>
+            <App />
+         </AuthProvider>
+      </QueryClientProvider>
    );
 }
 
