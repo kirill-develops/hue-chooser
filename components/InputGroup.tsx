@@ -1,5 +1,6 @@
 import { EyeClosed, EyeOpen, Input, Label } from "@/components/UI";
-import theme from "@/theme";
+import { useThemedStyles } from "@/context/ThemeContext";
+import { Theme } from "@/theme";
 import { ReactNode, useState } from "react";
 import { Pressable, StyleSheet, TextInputProps, View } from "react-native";
 
@@ -16,6 +17,7 @@ export default function InputGroup({
    textContentType,
    ...inputProps
 }: InputGroupProps) {
+   const styles = useThemedStyles(makeStyles);
    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
    const isPassword =
       textContentType === "newPassword" || textContentType === "password";
@@ -57,6 +59,7 @@ function PasswordVisabilityToggle({
    onPress,
    isVisable,
 }: PasswordVisabilityToggleProps) {
+   const styles = useThemedStyles(makeStyles);
    return (
       <Pressable
          onPress={onPress}
@@ -67,21 +70,23 @@ function PasswordVisabilityToggle({
    );
 }
 
-const styles = StyleSheet.create({
-   InputGroup: {
-      marginBottom: theme.spacing.marginBottomInputGroup,
-   },
-   inputWrapper: {
-      position: "relative",
-   },
-   passwordInput: {
-      paddingRight: 52,
-   },
-   eyeIcon: {
-      position: "absolute",
-      right: theme.spacing.inputPaddingHorizontal,
-      top: 0,
-      bottom: 0,
-      justifyContent: "center",
-   },
-});
+function makeStyles(theme: Theme) {
+   return StyleSheet.create({
+      InputGroup: {
+         marginBottom: theme.spacing.marginBottomInputGroup,
+      },
+      inputWrapper: {
+         position: "relative",
+      },
+      passwordInput: {
+         paddingRight: 52,
+      },
+      eyeIcon: {
+         position: "absolute",
+         right: theme.spacing.inputPaddingHorizontal,
+         top: 0,
+         bottom: 0,
+         justifyContent: "center",
+      },
+   });
+}

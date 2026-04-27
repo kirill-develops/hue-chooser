@@ -1,4 +1,5 @@
 import { AuthProvider, useAuth } from "@/context/AuthContext";
+import { ThemeProvider } from "@/context/ThemeContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Stack } from "expo-router";
 
@@ -18,7 +19,9 @@ export default function RootLayout() {
    return (
       <QueryClientProvider client={queryClient}>
          <AuthProvider>
-            <App />
+            <ThemeProvider>
+               <App />
+            </ThemeProvider>
          </AuthProvider>
       </QueryClientProvider>
    );

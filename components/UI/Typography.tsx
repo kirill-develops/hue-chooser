@@ -1,7 +1,10 @@
-import theme from "@/theme";
+import { useThemedStyles } from "@/context/ThemeContext";
+import { Theme } from "@/theme";
 import { StyleSheet, Text, TextProps } from "react-native";
 
 export function Title({ style, ...props }: TextProps) {
+   const styles = useThemedStyles(makeStyles);
+
    return (
       <Text
          style={[styles.title, style]}
@@ -11,6 +14,8 @@ export function Title({ style, ...props }: TextProps) {
 }
 
 export function Subtitle({ style, ...props }: TextProps) {
+   const styles = useThemedStyles(makeStyles);
+
    return (
       <Text
          style={[styles.subtitle, style]}
@@ -20,6 +25,8 @@ export function Subtitle({ style, ...props }: TextProps) {
 }
 
 export function Body({ style, ...props }: TextProps) {
+   const styles = useThemedStyles(makeStyles);
+
    return (
       <Text
          style={[styles.body, style]}
@@ -29,6 +36,8 @@ export function Body({ style, ...props }: TextProps) {
 }
 
 export function Label({ style, ...props }: TextProps) {
+   const styles = useThemedStyles(makeStyles);
+
    return (
       <Text
          style={[styles.label, style]}
@@ -38,6 +47,8 @@ export function Label({ style, ...props }: TextProps) {
 }
 
 export function OrText({ style, ...props }: TextProps) {
+   const styles = useThemedStyles(makeStyles);
+
    return (
       <Text
          style={[styles.orText, style]}
@@ -47,6 +58,8 @@ export function OrText({ style, ...props }: TextProps) {
 }
 
 export function FooterText({ style, ...props }: TextProps) {
+   const styles = useThemedStyles(makeStyles);
+
    return (
       <Text
          style={[styles.footerText, style]}
@@ -56,6 +69,8 @@ export function FooterText({ style, ...props }: TextProps) {
 }
 
 export function LinkText({ style, ...props }: TextProps) {
+   const styles = useThemedStyles(makeStyles);
+
    return (
       <Text
          style={[styles.footerText, styles.footerLink, style]}
@@ -64,41 +79,43 @@ export function LinkText({ style, ...props }: TextProps) {
    );
 }
 
-const styles = StyleSheet.create({
-   title: {
-      color: theme.colors.text,
-      fontSize: theme.fontSize.title,
-      fontWeight: theme.fontWeight.bold,
-      marginBottom: theme.spacing.marginBottomTitle,
-   },
-   subtitle: {
-      color: theme.colors.textSecondary,
-      fontSize: theme.fontSize.subtitle,
-      lineHeight: 22,
-      marginBottom: theme.spacing.marginBottomSubtitle,
-   },
-   body: {
-      color: theme.colors.text,
-      fontSize: theme.fontSize.button,
-   },
-   label: {
-      color: theme.colors.textMuted,
-      marginBottom: theme.spacing.marginBottomLabel,
-      fontSize: theme.fontSize.label,
-      textTransform: "uppercase",
-      letterSpacing: 0.8,
-   },
-   orText: {
-      color: theme.colors.orText,
-      textAlign: "center",
-      marginVertical: theme.spacing.marginVerticalOr,
-      fontSize: theme.fontSize.or,
-   },
-   footerText: {
-      color: theme.colors.footerText,
-      fontSize: theme.fontSize.footer,
-   },
-   footerLink: {
-      color: theme.colors.footerLink,
-   },
-});
+function makeStyles(theme: Theme) {
+   return StyleSheet.create({
+      title: {
+         color: theme.colors.text,
+         fontSize: theme.fontSize.title,
+         fontWeight: theme.fontWeight.bold,
+         marginBottom: theme.spacing.marginBottomTitle,
+      },
+      subtitle: {
+         color: theme.colors.textSecondary,
+         fontSize: theme.fontSize.subtitle,
+         lineHeight: 22,
+         marginBottom: theme.spacing.marginBottomSubtitle,
+      },
+      body: {
+         color: theme.colors.text,
+         fontSize: theme.fontSize.button,
+      },
+      label: {
+         color: theme.colors.textMuted,
+         marginBottom: theme.spacing.marginBottomLabel,
+         fontSize: theme.fontSize.label,
+         textTransform: "uppercase",
+         letterSpacing: 0.8,
+      },
+      orText: {
+         color: theme.colors.orText,
+         textAlign: "center",
+         marginVertical: theme.spacing.marginVerticalOr,
+         fontSize: theme.fontSize.or,
+      },
+      footerText: {
+         color: theme.colors.footerText,
+         fontSize: theme.fontSize.footer,
+      },
+      footerLink: {
+         color: theme.colors.footerLink,
+      },
+   });
+}

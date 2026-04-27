@@ -1,3 +1,5 @@
+export type Theme = typeof lightTheme | typeof darkTheme;
+
 const commonTheme = {
    borderRadius: {
       card: 24,
@@ -30,7 +32,7 @@ const commonTheme = {
       marginBottomLabel: 8,
       marginTopButton: 8,
       marginVerticalOr: 18,
-      gapSocialRow: 12,
+      gapColumnRow: 12,
       marginTopFooter: 22,
    },
    shadow: {
@@ -41,7 +43,8 @@ const commonTheme = {
    },
 };
 
-const lightTheme = {
+export const lightTheme = {
+   ...commonTheme,
    colors: {
       background: "#ffffff",
       card: "#ffffff",
@@ -62,7 +65,8 @@ const lightTheme = {
    },
 };
 
-const darkTheme = {
+export const darkTheme = {
+   ...commonTheme,
    colors: {
       background: "#0a0f1f",
       card: "#111a35",
@@ -82,7 +86,3 @@ const darkTheme = {
       shadow: "#000",
    },
 };
-
-const theme = { ...commonTheme, ...darkTheme };
-
-export default theme;

@@ -9,7 +9,7 @@ import {
    Title,
 } from "@/components/UI";
 import { useState } from "react";
-import { Alert, StyleSheet } from "react-native";
+import { Alert } from "react-native";
 
 export default function ForgotPassword() {
    const [email, setEmail] = useState("");
@@ -33,8 +33,8 @@ export default function ForgotPassword() {
             <Card>
                <Title>Check Your Email</Title>
                <Subtitle>
-                  We've sent a password reset link to {email}. Please check your
-                  email and follow the instructions to reset your password.
+                  We&#39;ve sent a password reset link to {email}. Please check
+                  your email and follow the instructions to reset your password.
                </Subtitle>
 
                {/* <View style={styles.linkRow}>
@@ -73,7 +73,7 @@ export default function ForgotPassword() {
                title="Send Reset Link"
                onPress={handleResetPassword}
             />
-            <FooterRow style={styles.FooterRow}>
+            <FooterRow variant="end">
                <Link
                   href="/"
                   dismissTo
@@ -85,9 +85,3 @@ export default function ForgotPassword() {
       </Screen>
    );
 }
-
-const styles = StyleSheet.create({
-   FooterRow: {
-      justifyContent: "flex-end",
-   },
-});
