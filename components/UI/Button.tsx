@@ -110,7 +110,7 @@ function makeStyles(theme: Theme) {
       },
       primaryText: {
          fontSize: theme.fontSize.button,
-         color: theme.colors.text,
+         color: theme.colors.buttonText,
       },
       secondaryText: {
          fontSize: theme.fontSize.button,
@@ -122,7 +122,7 @@ function makeStyles(theme: Theme) {
       },
       socialAltText: {
          fontSize: theme.fontSize.social,
-         color: theme.colors.text,
+         color: theme.colors.socialText,
       },
       linkText: {
          fontSize: theme.fontSize.footer,
