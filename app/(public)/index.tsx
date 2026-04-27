@@ -10,37 +10,22 @@ import {
    Subtitle,
    Title,
 } from "@/components/UI";
-import { useAuth } from "@/context/AuthContext";
-import theme from "@/theme";
-import { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { usePublicSignInScreen } from "@/lib/hooks/usePublicSignInScreen";
+import { Alert } from "react-native";
 
 export default function Index() {
-   const { login } = useAuth();
-   const [form, setForm] = useState({
-      email: "",
-      password: "",
-   });
+   const {
+      form,
+      handleFormUpdate,
+      handleGoogleSignIn,
+      handleAppleSignIn,
+      handleEmailSignIn,
+   } = usePublicSignInScreen();
 
-   const handleFormUpdate = (field: keyof typeof form) => (value: string) => {
-      setForm((prev) => ({ ...prev, [field]: value }));
-   };
-
-   const handleGoogleSignIn = () => {};
-   const handleAppleSignIn = () => {};
-
-   const handleSignIn = async () => {
-      if (!form.email || !form.password) {
-         Alert.alert("Error", "Please enter both email and password.");
-         return;
-      } else {
-         try {
-            await login(form.email, form.password);
-         } catch (error) {
-            const message =
-               error instanceof Error ? error.message : "Please try again.";
-            Alert.alert("Login Failed", message);
-         }
+   const handleSignInPress = async () => {
+      const result = await handleEmailSignIn();
+      if (!result.ok) {
+         Alert.alert(result.title, result.message);
       }
    };
 
@@ -72,11 +57,11 @@ export default function Index() {
             />
             <Button
                title="Sign in"
-               onPress={handleSignIn}
+               onPress={handleSignInPress}
             />
             <OrText>or continue with</OrText>
 
-            <View style={styles.socialRow}>
+            <CardRow variant="column">
                <Button
                   title="Sign in with Google"
                   onPress={handleGoogleSignIn}
@@ -87,7 +72,7 @@ export default function Index() {
                   onPress={handleAppleSignIn}
                   variant="socialAlt"
                />
-            </View>
+            </CardRow>
             <CardRow>
                <Link href="/about">About Hue Chooser</Link>
             </CardRow>
@@ -99,10 +84,3 @@ export default function Index() {
       </Screen>
    );
 }
-
-const styles = StyleSheet.create({
-   socialRow: {
-      flexDirection: "column",
-      gap: theme.spacing.gapSocialRow,
-   },
-});
