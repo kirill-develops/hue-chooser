@@ -13,7 +13,7 @@ import {
 
 type ButtonProps = PressableProps & {
    title: string;
-   variant?: "primary" | "secondary" | "social" | "socialAlt";
+   variant?: "primary" | "secondary" | "social" | "socialAlt" | "link";
 };
 
 export default function Button({
@@ -41,7 +41,7 @@ export default function Button({
 
 const getButtonVariantStyles = (
    styles: ReturnType<typeof makeStyles>,
-   variant: "primary" | "secondary" | "social" | "socialAlt",
+   variant: "primary" | "secondary" | "social" | "socialAlt" | "link",
    style?: PressableProps["style"],
 ) => {
    const { button, text, pressed } = getVariantStyles(styles)[variant];
@@ -85,6 +85,11 @@ function makeStyles(theme: Theme) {
          backgroundColor: theme.colors.socialButtonAlt,
          paddingVertical: theme.spacing.socialButtonPaddingVertical,
       },
+      linkButton: {
+         backgroundColor: "transparent",
+         paddingVertical: 0,
+         marginTop: 0,
+      },
       pressedPrimary: {
          opacity: 0.8,
       },
@@ -95,6 +100,9 @@ function makeStyles(theme: Theme) {
          opacity: 0.7,
       },
       pressedSocialAlt: {
+         opacity: 0.7,
+      },
+      pressedLink: {
          opacity: 0.7,
       },
       buttonText: {
@@ -115,6 +123,11 @@ function makeStyles(theme: Theme) {
       socialAltText: {
          fontSize: theme.fontSize.social,
          color: theme.colors.text,
+      },
+      linkText: {
+         fontSize: theme.fontSize.footer,
+         color: theme.colors.footerLink,
+         fontWeight: "400",
       },
    });
 }
@@ -140,5 +153,10 @@ const getVariantStyles = (styles: ReturnType<typeof makeStyles>) =>
          button: styles.socialAltButton,
          text: styles.socialAltText,
          pressed: styles.pressedSocialAlt,
+      },
+      link: {
+         button: styles.linkButton,
+         text: styles.linkText,
+         pressed: styles.pressedLink,
       },
    }) as const;
