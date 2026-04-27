@@ -9,43 +9,18 @@ import {
    Subtitle,
    Title,
 } from "@/components/UI";
-import { useAuth } from "@/context/AuthContext";
-import { validateSignUpForm } from "@/lib/validation/signup";
-import { useState } from "react";
+import { usePublicSignUpScreen } from "@/lib/hooks/usePublicSignUpScreen";
 import { Alert } from "react-native";
 
 export default function SignUp() {
-   const { signup } = useAuth();
-   const [form, setForm] = useState({
-      name: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-   });
-   const handleFormUpdate = (field: keyof typeof form) => (value: string) => {
-      setForm((prev) => ({ ...prev, [field]: value }));
-   };
+   const { form, handleFormUpdate, handleSignUp } = usePublicSignUpScreen();
 
-   const handleSignUp = async () => {
-      const result = validateSignUpForm(form);
-      if (!result.isValid) {
-         Alert.alert("Error", result.error);
-         return;
-      }
-
-      try {
-         await signup(
-            result.value.name,
-            result.value.email,
-            result.value.password,
-         );
-      } catch (error) {
-         const message =
-            error instanceof Error ? error.message : "Please try again.";
-         Alert.alert("Sign Up Failed", message);
+   const handleSignUpPress = async () => {
+      const result = await handleSignUp();
+      if (!result.ok) {
+         Alert.alert(result.title, result.message);
       }
    };
-
    return (
       <Screen>
          <Card>
@@ -93,7 +68,7 @@ export default function SignUp() {
             />
             <Button
                title="Sign up"
-               onPress={handleSignUp}
+               onPress={handleSignUpPress}
             />
             <FooterRow>
                <FooterText>Already have an account?</FooterText>

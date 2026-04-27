@@ -3,28 +3,30 @@ import {
    Button,
    Card,
    FooterRow,
+   FooterText,
    Link,
    Screen,
    Subtitle,
    Title,
 } from "@/components/UI";
-import { useState } from "react";
+import usePublicForgetPasswordScreen from "@/lib/hooks/usePublicForgetPasswordScreen";
+
 import { Alert } from "react-native";
 
 export default function ForgotPassword() {
-   const [email, setEmail] = useState("");
-   const [isSubmitted, setIsSubmitted] = useState(false);
+   const { email, setEmail, isSubmitted, setIsSubmitted, handleResetPassword } =
+      usePublicForgetPasswordScreen();
 
-   const handleResetPassword = () => {
-      if (!email) {
-         Alert.alert("Error", "Please enter your email address.");
-         return;
+   const handleResetPasswordPress = async () => {
+      const result = handleResetPassword();
+      if (!result.ok) {
+         Alert.alert(result.title, result.message);
+      } else {
+         Alert.alert(
+            "Reset Link Sent",
+            `A password reset link has been sent to ${email}`,
+         );
       }
-      setIsSubmitted(true);
-      Alert.alert(
-         "Reset Link Sent",
-         `A password reset link has been sent to ${email}`,
-      );
    };
 
    if (isSubmitted) {
@@ -37,14 +39,17 @@ export default function ForgotPassword() {
                   your email and follow the instructions to reset your password.
                </Subtitle>
 
-               {/* <View style={styles.linkRow}>
-                  <FooterText>Didn't receive the email?</FooterText>
-                  <Button onPress={() => setIsSubmitted(false)}>Try again</Button>
-               </View> */}
-
                <FooterRow>
+                  <FooterText>Didn&#39;t receive the email?</FooterText>
+                  <Button
+                     title="Try again"
+                     variant="link"
+                     onPress={() => setIsSubmitted(false)}
+                  />
+               </FooterRow>
+
+               <FooterRow variant="end">
                   <Link href="/">Sign in</Link>
-                  <Link href="/signup">Create account</Link>
                </FooterRow>
             </Card>
          </Screen>
@@ -56,8 +61,8 @@ export default function ForgotPassword() {
          <Card>
             <Title>Reset Password</Title>
             <Subtitle>
-               Enter the email address associated with your account and we'll
-               send you a link to reset your password.
+               Enter the email address associated with your account and
+               we&#39;ll send you a link to reset your password.
             </Subtitle>
 
             <InputGroup
@@ -71,7 +76,7 @@ export default function ForgotPassword() {
 
             <Button
                title="Send Reset Link"
-               onPress={handleResetPassword}
+               onPress={handleResetPasswordPress}
             />
             <FooterRow variant="end">
                <Link
