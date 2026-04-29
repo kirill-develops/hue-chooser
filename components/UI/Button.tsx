@@ -1,4 +1,4 @@
-import { useThemedStyles } from "@/context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 import { Theme } from "@/theme";
 import {
    Pressable,
@@ -22,7 +22,7 @@ export default function Button({
    variant = "primary",
    ...props
 }: ButtonProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
    const { combinedButtonStyle, textStyles } = getButtonVariantStyles(
       styles,
       variant,

@@ -1,9 +1,9 @@
-import { useThemedStyles } from "@/context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 import { Theme } from "@/theme";
 import { StyleSheet, Text, TextProps } from "react-native";
 
 export function Title({ style, ...props }: TextProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
 
    return (
       <Text
@@ -14,7 +14,7 @@ export function Title({ style, ...props }: TextProps) {
 }
 
 export function Subtitle({ style, ...props }: TextProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
 
    return (
       <Text
@@ -25,7 +25,7 @@ export function Subtitle({ style, ...props }: TextProps) {
 }
 
 export function Body({ style, ...props }: TextProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
 
    return (
       <Text
@@ -36,7 +36,7 @@ export function Body({ style, ...props }: TextProps) {
 }
 
 export function Label({ style, ...props }: TextProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
 
    return (
       <Text
@@ -47,7 +47,7 @@ export function Label({ style, ...props }: TextProps) {
 }
 
 export function OrText({ style, ...props }: TextProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
 
    return (
       <Text
@@ -58,7 +58,7 @@ export function OrText({ style, ...props }: TextProps) {
 }
 
 export function FooterText({ style, ...props }: TextProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
 
    return (
       <Text
@@ -69,7 +69,7 @@ export function FooterText({ style, ...props }: TextProps) {
 }
 
 export function LinkText({ style, ...props }: TextProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
 
    return (
       <Text

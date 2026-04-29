@@ -1,10 +1,10 @@
-import { useTheme, useThemedStyles } from "@/context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 import { Theme } from "@/theme";
 import { StyleSheet, TextInput, type TextInputProps } from "react-native";
 
 export default function Input({ style, ...props }: TextInputProps) {
    const theme = useTheme();
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(theme);
 
    return (
       <TextInput

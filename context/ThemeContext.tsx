@@ -1,5 +1,5 @@
 import { darkTheme, lightTheme, Theme } from "@/theme";
-import { createContext, useContext, useMemo } from "react";
+import { createContext, useContext } from "react";
 import { useColorScheme } from "react-native";
 
 const ThemeContext = createContext<Theme | undefined>(undefined);
@@ -11,11 +11,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
    return (
       <ThemeContext.Provider value={theme}>{children}</ThemeContext.Provider>
    );
-}
-
-export function useThemedStyles<T>(makeStyles: (theme: Theme) => T): T {
-   const theme = useTheme();
-   return useMemo(() => makeStyles(theme), [theme, makeStyles]);
 }
 
 export function useTheme() {

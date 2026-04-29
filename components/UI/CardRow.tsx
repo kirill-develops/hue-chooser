@@ -1,4 +1,4 @@
-import { useThemedStyles } from "@/context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 import { Theme } from "@/theme";
 import { ReactNode } from "react";
 import { StyleSheet, View, ViewProps } from "react-native";
@@ -15,7 +15,8 @@ export default function CardRow({
    style,
    ...props
 }: CardRowProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
+
    const variantStyle =
       variant === "column" ? styles.columnRow : styles.default;
 

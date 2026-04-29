@@ -1,5 +1,5 @@
 import { EyeClosed, EyeOpen, Input, Label } from "@/components/UI";
-import { useThemedStyles } from "@/context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 import { Theme } from "@/theme";
 import { ReactNode, useState } from "react";
 import { Pressable, StyleSheet, TextInputProps, View } from "react-native";
@@ -17,7 +17,7 @@ export default function InputGroup({
    textContentType,
    ...inputProps
 }: InputGroupProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
    const isPassword =
       textContentType === "newPassword" || textContentType === "password";
@@ -59,7 +59,7 @@ function PasswordVisabilityToggle({
    onPress,
    isVisable,
 }: PasswordVisabilityToggleProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
    return (
       <Pressable
          onPress={onPress}

@@ -1,9 +1,9 @@
-import { useThemedStyles } from "@/context/ThemeContext";
+import { useTheme } from "@/context/ThemeContext";
 import { Theme } from "@/theme";
 import { StyleSheet, View, ViewProps } from "react-native";
 
 export default function Screen({ style, ...props }: ViewProps) {
-   const styles = useThemedStyles(makeStyles);
+   const styles = makeStyles(useTheme());
 
    return (
       <View
