@@ -1,3 +1,4 @@
+import { LoadingScreen } from "@/components/";
 import {
    Button,
    Card,
@@ -10,7 +11,7 @@ import {
 import { useAuth } from "@/context/AuthContext";
 import { useInsertMovies } from "@/db/hooks/mutations";
 import { useFetchMovies, useFetchUser } from "@/db/hooks/queries";
-import { ActivityIndicator, Alert } from "react-native";
+import { Alert } from "react-native";
 
 export default function Index() {
    const { logout } = useAuth();
@@ -19,13 +20,7 @@ export default function Index() {
    const { data: userData } = useFetchUser();
 
    if (!userData) {
-      return (
-         <Screen>
-            <Card>
-               <ActivityIndicator size="large" />
-            </Card>
-         </Screen>
-      );
+      return <LoadingScreen />;
    }
 
    const pendingMessage = isPending
