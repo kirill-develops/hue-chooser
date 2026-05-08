@@ -1,3 +1,4 @@
+import { fetchUser } from "@/db/users";
 import { supabase } from "@/lib/supabase";
 import type { Session } from "@supabase/supabase-js";
 import { useQueryClient } from "@tanstack/react-query";
@@ -31,13 +32,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       } = supabase.auth.onAuthStateChange((event, currentSession) => {
          console.log("auth event:", event, "session:", !!currentSession);
 
-         if (currentSession) {
-            setSession(currentSession);
-         } else {
-            setSession(null);
-            queryClient.clear();
-         }
-         setIsSessionLoading(false);
+         setTimeout(async () => {
+            if (currentSession) {
+               const user = await fetchUser(currentSession?.user.id);
+               queryClient.setQueryData(["user", currentSession.user.id], user);
+
+               setSession(currentSession);
+            } else {
+               setSession(null);
+               queryClient.clear();
+            }
+            setIsSessionLoading(false);
+         }, 0);
       });
 
       AppState.addEventListener("change", (state) => {

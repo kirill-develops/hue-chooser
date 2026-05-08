@@ -8,19 +8,21 @@ import {
    Title,
 } from "@/components/UI";
 import { useAuth } from "@/context/AuthContext";
-import { useFetchMovies, useInsertMovies } from "@/db/hooks/useMovies";
-import { Alert } from "react-native";
+import { useInsertMovies } from "@/db/hooks/mutations";
+import { useFetchMovies, useFetchUser } from "@/db/hooks/queries";
+import { ActivityIndicator, Alert } from "react-native";
 
 export default function Index() {
-   const { session, logout } = useAuth();
+   const { logout } = useAuth();
    const { data: movies, isPending, error } = useFetchMovies();
    const { mutate: insertMovie } = useInsertMovies();
+   const { data: userData } = useFetchUser();
 
-   if (!session?.user) {
+   if (!userData) {
       return (
          <Screen>
             <Card>
-               <Title>User Not found</Title>
+               <ActivityIndicator size="large" />
             </Card>
          </Screen>
       );
@@ -66,7 +68,7 @@ export default function Index() {
       <Screen>
          <Card>
             <Title>Hue Chooser</Title>
-            <Subtitle>{`Welcome back, ${session.user.user_metadata.name}!`}</Subtitle>
+            <Subtitle>{`Welcome back, ${userData.name}!`}</Subtitle>
             <Subtitle>{pendingMessage}</Subtitle>
             <CardRow>
                <Link href="/profile">Go to Dashboard</Link>
