@@ -1,10 +1,7 @@
 import { supabase } from "@/lib/supabase";
-import { Movie } from "./types";
 
 export async function fetchMovies() {
-   const { data, error } = await supabase
-      .from("movies")
-      .select<"*", Movie>("*");
+   const { data, error } = await supabase.from("movies").select("*");
 
    if (error) {
       throw new Error(error.message);
