@@ -22,14 +22,18 @@ begin
         raise exception 'You cannot add yourself as a friend';
     end if;
 
+    if not exists (
+        select 1
+        from public.users u
+        where u.id = friend_id
+    ) then
+        raise exception 'Friend user does not exist';
+    end if;
+
     select u.name
     into friend_name
     from public.users u
     where u.id = friend_id;
-
-    if friend_name is null then
-        raise exception 'Friend user does not exist';
-    end if;
 
     low_id := least(current_user_id, friend_id);
     high_id := greatest(current_user_id, friend_id);
