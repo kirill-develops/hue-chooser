@@ -1,5 +1,6 @@
 import { useTheme } from "@/context/ThemeContext";
 import { Theme } from "@/theme";
+import { Href, router } from "expo-router";
 import {
    Pressable,
    PressableProps,
@@ -14,12 +15,14 @@ import {
 type ButtonProps = PressableProps & {
    title: string;
    variant?: "primary" | "secondary" | "social" | "socialAlt" | "link";
+   href?: Href;
 };
 
 export default function Button({
    style,
    title,
    variant = "primary",
+   href,
    ...props
 }: ButtonProps) {
    const styles = makeStyles(useTheme());
@@ -29,12 +32,26 @@ export default function Button({
       style,
    );
 
+   const content = <Text style={textStyles}>{title}</Text>;
+
+   if (href) {
+      return (
+         <Pressable
+            style={combinedButtonStyle}
+            {...props}
+            onPress={() => router.push(href)}
+         >
+            {content}
+         </Pressable>
+      );
+   }
+
    return (
       <Pressable
          style={combinedButtonStyle}
          {...props}
       >
-         <Text style={textStyles}>{title}</Text>
+         {content}
       </Pressable>
    );
 }
@@ -59,7 +76,7 @@ const getButtonVariantStyles = (
    return { combinedButtonStyle, textStyles };
 };
 
-function makeStyles(theme: Theme) {
+export function makeStyles(theme: Theme) {
    return StyleSheet.create({
       buttonBase: {
          borderRadius: theme.borderRadius.button,
@@ -132,7 +149,7 @@ function makeStyles(theme: Theme) {
    });
 }
 
-const getVariantStyles = (styles: ReturnType<typeof makeStyles>) =>
+export const getVariantStyles = (styles: ReturnType<typeof makeStyles>) =>
    ({
       primary: {
          button: styles.primaryButton,
