@@ -5,7 +5,7 @@ import { StyleSheet, View, ViewProps } from "react-native";
 
 type CardRowProps = {
    children: ReactNode;
-   variant?: "default" | "column";
+   variant?: "default" | "column" | "row";
    style?: ViewProps["style"];
 };
 
@@ -17,12 +17,9 @@ export default function CardRow({
 }: CardRowProps) {
    const styles = makeStyles(useTheme());
 
-   const variantStyle =
-      variant === "column" ? styles.columnRow : styles.default;
-
    return (
       <View
-         style={[variantStyle, style]}
+         style={[styles[variant], style]}
          {...props}
       >
          {children}
@@ -36,9 +33,14 @@ function makeStyles(theme: Theme) {
          alignItems: "center",
          marginVertical: theme.spacing.marginVerticalOr,
       },
-      columnRow: {
+      column: {
          flexDirection: "column",
          gap: theme.spacing.gapColumnRow,
+      },
+      row: {
+         flexDirection: "row",
+         alignItems: "center",
+         justifyContent: "center",
       },
    });
 }

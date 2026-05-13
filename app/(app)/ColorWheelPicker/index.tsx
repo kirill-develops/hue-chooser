@@ -4,14 +4,14 @@ import {
    HexInput,
    LightnessSlider,
 } from "@/components/ColorWheelPicker/";
-import { Button, Card, Screen, Title } from "@/components/UI";
+import { Button, Card, CardRow, Screen, Title } from "@/components/UI";
 import {
    ColorPickerProvider,
    useColorPickerContext,
 } from "@/context/ColorPickerContext";
 import { router } from "expo-router";
 import React from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet } from "react-native";
 
 function ColorWheelPickerInner() {
    const { hexColor, isColorPending, handleConfirmColor } =
@@ -34,10 +34,13 @@ function ColorWheelPickerInner() {
             <Title>Select a Colour</Title>
             <ColorWheel />
             <LightnessSlider />
-            <View style={styles.previewRow}>
+            <CardRow
+               variant="row"
+               style={styles.previewRow}
+            >
                <ColorSwatch color={hexColor} />
                <HexInput />
-            </View>
+            </CardRow>
             <Button
                title={"Confirm Colour"}
                disabled={isColorPending}
@@ -58,9 +61,7 @@ export default function ColorWheelPicker() {
 
 const styles = StyleSheet.create({
    previewRow: {
-      flexDirection: "row",
-      alignItems: "center",
       marginTop: 24,
-      gap: 12,
+      gap: 8,
    },
 });
