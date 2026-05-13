@@ -3,7 +3,7 @@ import { supabase } from "@/lib/supabase";
 export async function fetchFriends(id: string) {
    const { data, error } = await supabase
       .from("friend_edges")
-      .select("friend:users!friend_id(*)")
+      .select("friend:users!friend_id(*, color_history(code, created_at))")
       .eq("user_id", id);
 
    if (error) {

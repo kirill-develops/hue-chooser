@@ -39,6 +39,35 @@ export type Database = {
   }
   public: {
     Tables: {
+      color_history: {
+        Row: {
+          color: string
+          created_at: string
+          id: string
+          user_id: string
+        }
+        Insert: {
+          color: string
+          created_at?: string
+          id?: string
+          user_id: string
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          id?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "color_history_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       friend_edges: {
         Row: {
           created_at: string
