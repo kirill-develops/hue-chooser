@@ -1,11 +1,9 @@
-import { hslToHex } from "@/app/(app)/ColorWheelPicker/colorUtils";
 import {
    SLIDER_HEIGHT,
    SLIDER_WIDTH,
-} from "@/app/(app)/ColorWheelPicker/constants";
-import { useLightSlider } from "@/app/(app)/ColorWheelPicker/hooks/useLightSlider";
+} from "@/components/ColorWheelPicker/constants/constants";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import Svg, {
    Circle,
    Defs,
@@ -13,7 +11,10 @@ import Svg, {
    Rect,
    Stop,
 } from "react-native-svg";
-import { useColorPickerContext } from "../../app/(app)/ColorWheelPicker/ColorPickerContext";
+import { useColorPickerContext } from "../../context/ColorPickerContext";
+import { Label } from "../UI";
+import { hslToHex } from "./colorUtils";
+import { useLightSlider } from "./hooks/useLightSlider";
 
 export function LightnessSlider() {
    const { hue, sat, lightOverride } = useColorPickerContext();
@@ -21,7 +22,7 @@ export function LightnessSlider() {
 
    return (
       <View style={styles.container}>
-         <Text style={styles.label}>Lightness</Text>
+         <Label>Lightness</Label>
          <View
             ref={sliderRef}
             style={styles.track}
@@ -82,13 +83,7 @@ const styles = StyleSheet.create({
       width: SLIDER_WIDTH,
       marginTop: 20,
    },
-   label: {
-      color: "rgba(255,255,255,0.5)",
-      fontSize: 11,
-      letterSpacing: 0.8,
-      textTransform: "uppercase",
-      marginBottom: 8,
-   },
+
    track: {
       height: SLIDER_HEIGHT,
       borderRadius: SLIDER_HEIGHT / 2,

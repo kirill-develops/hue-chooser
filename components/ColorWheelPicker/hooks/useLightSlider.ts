@@ -1,17 +1,11 @@
+import { useColorPickerContext } from "@/context/ColorPickerContext";
 import { useCallback, useRef } from "react";
 import { PanResponder, View } from "react-native";
-import { useColorPickerContext } from "../ColorPickerContext";
 import { clampPct, computeHex } from "../colorUtils";
 
 export function useLightSlider() {
-   const {
-      hueRef,
-      satRef,
-      lightRef,
-      setLightOverride,
-      setInputVal,
-      setConfirmed,
-   } = useColorPickerContext();
+   const { hueRef, satRef, lightRef, setLightOverride, setInputVal } =
+      useColorPickerContext();
 
    const sliderRef = useRef<View | null>(null);
    const sliderLayout = useRef({ pageX: 0 });
@@ -23,7 +17,6 @@ export function useLightSlider() {
       setInputVal(
          computeHex(hueRef.current, satRef.current, newLight).toUpperCase(),
       );
-      setConfirmed(false);
    }, []);
 
    const sliderPan = useRef(

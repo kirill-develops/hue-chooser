@@ -5,19 +5,28 @@ import {
    LightnessSlider,
 } from "@/components/ColorWheelPicker/";
 import { Button, Card, Screen, Title } from "@/components/UI";
-import React from "react";
-import { StyleSheet, View } from "react-native";
 import {
    ColorPickerProvider,
    useColorPickerContext,
-} from "./ColorPickerContext";
-
-interface ColorWheelPickerProps {
-   onConfirm?: (hex: string) => void;
-}
+} from "@/context/ColorPickerContext";
+import { router } from "expo-router";
+import React from "react";
+import { Alert, StyleSheet, View } from "react-native";
 
 function ColorWheelPickerInner() {
-   const { hexColor, confirmed, handleConfirm } = useColorPickerContext();
+   const { hexColor, isColorPending, handleConfirmColor } =
+      useColorPickerContext();
+
+   const handleConfirmPress = async () => {
+      const result = await handleConfirmColor();
+      if (!result.ok) {
+         Alert.alert(result.title, result.message);
+      }
+      if (result.ok) {
+         Alert.alert(result.title, result.message);
+         router.back();
+      }
+   };
 
    return (
       <Screen>
@@ -30,17 +39,18 @@ function ColorWheelPickerInner() {
                <HexInput />
             </View>
             <Button
-               title={confirmed ? "✓  Confirmed" : "Confirm Colour"}
-               onPress={handleConfirm}
+               title={"Confirm Colour"}
+               disabled={isColorPending}
+               onPress={handleConfirmPress}
             />
          </Card>
       </Screen>
    );
 }
 
-export default function ColorWheelPicker({ onConfirm }: ColorWheelPickerProps) {
+export default function ColorWheelPicker() {
    return (
-      <ColorPickerProvider onConfirm={onConfirm}>
+      <ColorPickerProvider>
          <ColorWheelPickerInner />
       </ColorPickerProvider>
    );

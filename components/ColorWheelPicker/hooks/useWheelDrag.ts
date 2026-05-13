@@ -1,19 +1,11 @@
+import { useColorPickerContext } from "@/context/ColorPickerContext";
 import { useCallback, useRef } from "react";
 import { PanResponder, View } from "react-native";
-import { useColorPickerContext } from "../ColorPickerContext";
 import { clampToCircle, computeHex, pointToHueSat } from "../colorUtils";
 
 export function useWheelDrag() {
-   const {
-      hueRef,
-      satRef,
-      lightRef,
-      setHue,
-      setSat,
-      setPos,
-      setInputVal,
-      setConfirmed,
-   } = useColorPickerContext();
+   const { hueRef, satRef, lightRef, setHue, setSat, setPos, setInputVal } =
+      useColorPickerContext();
 
    const containerRef = useRef<View | null>(null);
    const layoutRef = useRef({ pageX: 0, pageY: 0 });
@@ -29,7 +21,6 @@ export function useWheelDrag() {
       hueRef.current = h;
       satRef.current = s;
       setInputVal(computeHex(h, s, lightRef.current).toUpperCase());
-      setConfirmed(false);
    }, []);
 
    const panResponder = useRef(

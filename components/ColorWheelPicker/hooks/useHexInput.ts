@@ -1,7 +1,7 @@
+import { useColorPickerContext } from "@/context/ColorPickerContext";
 import { useCallback, useState } from "react";
-import { useColorPickerContext } from "../ColorPickerContext";
 import { expand3, hexToHsl } from "../colorUtils";
-import { SELECTOR_RADIUS, WHEEL_RADIUS } from "../constants";
+import { SELECTOR_RADIUS, WHEEL_RADIUS } from "../constants/constants";
 
 export function useHexInput() {
    const {

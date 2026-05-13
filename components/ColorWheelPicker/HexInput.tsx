@@ -1,7 +1,7 @@
-import { useHexInput } from "@/app/(app)/ColorWheelPicker/hooks/useHexInput";
 import { InputGroup } from "@/components";
 import React from "react";
 import { StyleSheet } from "react-native";
+import { useHexInput } from "./hooks/useHexInput";
 
 export function HexInput() {
    const { inputVal, selection, handleHexInput, handleSelectionChange } =
@@ -29,7 +29,6 @@ export function HexInput() {
 
 const styles = StyleSheet.create({
    input: {
-      color: "#fff",
       fontSize: 17,
       fontWeight: "600",
       letterSpacing: 1.5,

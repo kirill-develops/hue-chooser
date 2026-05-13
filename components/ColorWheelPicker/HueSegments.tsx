@@ -1,6 +1,6 @@
 import React from "react";
 import { Path } from "react-native-svg";
-import { SEGMENTS, WHEEL_RADIUS } from "./constants";
+import { SEGMENTS, WHEEL_RADIUS } from "./constants/constants";
 
 /** Pre-built hue-ring SVG segments — created once, never re-rendered. */
 const hueSegments = Array.from({ length: SEGMENTS }, (_, i) => {

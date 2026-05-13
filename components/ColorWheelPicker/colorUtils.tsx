@@ -1,4 +1,8 @@
-import { SELECTOR_RADIUS, SLIDER_WIDTH, WHEEL_RADIUS } from "./constants";
+import {
+   SELECTOR_RADIUS,
+   SLIDER_WIDTH,
+   WHEEL_RADIUS,
+} from "./constants/constants";
 
 export function hslToHex(h: number, s: number, l: number): string {
    s /= 100;

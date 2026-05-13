@@ -1,13 +1,13 @@
-import hueSegments from "@/app/(app)/ColorWheelPicker/HueSegments";
 import {
    SELECTOR_RADIUS,
    WHEEL_RADIUS,
    WHEEL_SIZE,
-} from "@/app/(app)/ColorWheelPicker/constants";
-import { useWheelDrag } from "@/app/(app)/ColorWheelPicker/hooks/useWheelDrag";
+} from "@/components/ColorWheelPicker/constants/constants";
 import { StyleSheet, View } from "react-native";
 import Svg, { Circle, Defs, RadialGradient, Stop } from "react-native-svg";
-import { useColorPickerContext } from "../../app/(app)/ColorWheelPicker/ColorPickerContext";
+import { useColorPickerContext } from "../../context/ColorPickerContext";
+import { useWheelDrag } from "./hooks/useWheelDrag";
+import hueSegments from "./HueSegments";
 
 export function ColorWheel() {
    const { pos, hexColor, selectorBorder, overlayColor, overlayOpacity } =
