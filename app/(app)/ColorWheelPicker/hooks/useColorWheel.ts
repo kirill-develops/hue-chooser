@@ -7,8 +7,8 @@ import {
    expand3,
    hexToHsl,
    pointToHueSat,
-} from "./colorUtils";
-import { SELECTOR_RADIUS, WHEEL_RADIUS } from "./constants";
+} from "../colorUtils";
+import { SELECTOR_RADIUS, WHEEL_RADIUS } from "../constants";
 
 interface UseColorWheelOptions {
    onConfirm?: (hex: string) => void;
@@ -110,14 +110,14 @@ export function useColorWheel({ onConfirm }: UseColorWheelOptions) {
       lightRef.current = newLight;
    }, []);
 
+   const handleSelectionChange = useCallback((start: number, end: number) => {
+      setSelection({ start: Math.max(1, start), end: Math.max(1, end) });
+   }, []);
+
    const handleConfirm = useCallback(() => {
       setConfirmed(true);
       onConfirm?.(hexColor);
    }, [hexColor, onConfirm]);
-
-   const handleSelectionChange = useCallback((start: number, end: number) => {
-      setSelection({ start: Math.max(1, start), end: Math.max(1, end) });
-   }, []);
 
    // ── Pan responders ────────────────────────────────────────────────────
    const panResponder = useRef(

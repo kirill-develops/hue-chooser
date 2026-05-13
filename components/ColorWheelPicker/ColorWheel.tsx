@@ -1,28 +1,19 @@
-import React from "react";
+import hueSegments from "@/app/(app)/ColorWheelPicker/HueSegments";
+import {
+   SELECTOR_RADIUS,
+   WHEEL_RADIUS,
+   WHEEL_SIZE,
+} from "@/app/(app)/ColorWheelPicker/constants";
+import { useWheelDrag } from "@/app/(app)/ColorWheelPicker/hooks/useWheelDrag";
 import { StyleSheet, View } from "react-native";
 import Svg, { Circle, Defs, RadialGradient, Stop } from "react-native-svg";
-import { SELECTOR_RADIUS, WHEEL_RADIUS, WHEEL_SIZE } from "./constants";
-import hueSegments from "./HueSegments";
+import { useColorPickerContext } from "../../app/(app)/ColorWheelPicker/ColorPickerContext";
 
-interface ColorWheelProps {
-   containerRef: React.RefObject<View | null>;
-   panHandlers: any;
-   pos: { x: number; y: number };
-   hexColor: string;
-   selectorBorder: string;
-   overlayColor: string;
-   overlayOpacity: number;
-}
+export function ColorWheel() {
+   const { pos, hexColor, selectorBorder, overlayColor, overlayOpacity } =
+      useColorPickerContext();
+   const { containerRef, panResponder } = useWheelDrag();
 
-export function ColorWheel({
-   containerRef,
-   panHandlers,
-   pos,
-   hexColor,
-   selectorBorder,
-   overlayColor,
-   overlayOpacity,
-}: ColorWheelProps) {
    return (
       <View
          ref={containerRef}
@@ -30,7 +21,7 @@ export function ColorWheel({
             styles.wheelWrapper,
             { width: WHEEL_SIZE, height: WHEEL_SIZE },
          ]}
-         {...panHandlers}
+         {...panResponder.panHandlers}
       >
          <Svg
             width={WHEEL_SIZE}

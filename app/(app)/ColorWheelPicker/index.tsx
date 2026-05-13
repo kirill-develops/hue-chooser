@@ -1,77 +1,48 @@
+import {
+   ColorSwatch,
+   ColorWheel,
+   HexInput,
+   LightnessSlider,
+} from "@/components/ColorWheelPicker/";
 import { Button, Card, Screen, Title } from "@/components/UI";
 import React from "react";
 import { StyleSheet, View } from "react-native";
-import { ColorSwatch } from "./ColorSwatch";
-import { ColorWheel } from "./ColorWheel";
-import { HexInput } from "./HexInput";
-import { LightnessSlider } from "./LightnessSlider";
-import { useColorWheel } from "./useColorWheel";
+import {
+   ColorPickerProvider,
+   useColorPickerContext,
+} from "./ColorPickerContext";
 
 interface ColorWheelPickerProps {
    onConfirm?: (hex: string) => void;
 }
 
-export default function ColorWheelPicker({ onConfirm }: ColorWheelPickerProps) {
-   const {
-      containerRef,
-      sliderRef,
-      panResponder,
-      sliderPan,
-      pos,
-      hue,
-      sat,
-      lightOverride,
-      selection,
-      inputVal,
-      confirmed,
-      hexColor,
-      overlayColor,
-      overlayOpacity,
-      selectorBorder,
-      handleHexInput,
-      handleConfirm,
-      handleSelectionChange,
-   } = useColorWheel({ onConfirm });
+function ColorWheelPickerInner() {
+   const { hexColor, confirmed, handleConfirm } = useColorPickerContext();
 
    return (
       <Screen>
          <Card>
             <Title>Select a Colour</Title>
-
-            <ColorWheel
-               containerRef={containerRef}
-               panHandlers={panResponder.panHandlers}
-               pos={pos}
-               hexColor={hexColor}
-               selectorBorder={selectorBorder}
-               overlayColor={overlayColor}
-               overlayOpacity={overlayOpacity}
-            />
-
-            <LightnessSlider
-               sliderRef={sliderRef}
-               panHandlers={sliderPan.panHandlers}
-               hue={hue}
-               sat={sat}
-               lightOverride={lightOverride}
-            />
-
+            <ColorWheel />
+            <LightnessSlider />
             <View style={styles.previewRow}>
                <ColorSwatch color={hexColor} />
-               <HexInput
-                  value={inputVal}
-                  selection={selection}
-                  onChangeText={handleHexInput}
-                  onSelectionChange={handleSelectionChange}
-               />
+               <HexInput />
             </View>
-
             <Button
                title={confirmed ? "✓  Confirmed" : "Confirm Colour"}
                onPress={handleConfirm}
             />
          </Card>
       </Screen>
+   );
+}
+
+export default function ColorWheelPicker({ onConfirm }: ColorWheelPickerProps) {
+   return (
+      <ColorPickerProvider onConfirm={onConfirm}>
+         <ColorWheelPickerInner />
+      </ColorPickerProvider>
    );
 }
 

@@ -1,3 +1,9 @@
+import { hslToHex } from "@/app/(app)/ColorWheelPicker/colorUtils";
+import {
+   SLIDER_HEIGHT,
+   SLIDER_WIDTH,
+} from "@/app/(app)/ColorWheelPicker/constants";
+import { useLightSlider } from "@/app/(app)/ColorWheelPicker/hooks/useLightSlider";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 import Svg, {
@@ -7,31 +13,19 @@ import Svg, {
    Rect,
    Stop,
 } from "react-native-svg";
-import { computeHex, hslToHex } from "./colorUtils";
-import { SLIDER_HEIGHT, SLIDER_WIDTH } from "./constants";
+import { useColorPickerContext } from "../../app/(app)/ColorWheelPicker/ColorPickerContext";
 
-interface LightnessSliderProps {
-   sliderRef: React.RefObject<View | null>;
-   panHandlers: any;
-   hue: number;
-   sat: number;
-   lightOverride: number;
-}
+export function LightnessSlider() {
+   const { hue, sat, lightOverride } = useColorPickerContext();
+   const { sliderRef, sliderPan } = useLightSlider();
 
-export function LightnessSlider({
-   sliderRef,
-   panHandlers,
-   hue,
-   sat,
-   lightOverride,
-}: LightnessSliderProps) {
    return (
       <View style={styles.container}>
          <Text style={styles.label}>Lightness</Text>
          <View
             ref={sliderRef}
             style={styles.track}
-            {...panHandlers}
+            {...sliderPan.panHandlers}
          >
             <Svg
                width={SLIDER_WIDTH}
@@ -73,7 +67,7 @@ export function LightnessSlider({
                   cx={(lightOverride / 100) * SLIDER_WIDTH}
                   cy={SLIDER_HEIGHT / 2}
                   r={SLIDER_HEIGHT / 2}
-                  fill={computeHex(hue, sat, lightOverride)}
+                  fill={hslToHex(hue, sat, lightOverride)}
                   stroke="#fff"
                   strokeWidth={2.5}
                />
