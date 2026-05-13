@@ -23,8 +23,11 @@ function ColorWheelPickerInner() {
          Alert.alert(result.title, result.message);
       }
       if (result.ok) {
-         Alert.alert(result.title, result.message);
-         router.back();
+         Alert.alert(result.title, result.message, [
+            {
+               onPress: () => router.back(),
+            },
+         ]);
       }
    };
 
