@@ -1,12 +1,12 @@
 import { InputGroup, LoadingScreen } from "@/components";
-import { Button, Card, Screen, Subtitle, Title } from "@/components/UI";
+import { Body, Button, Card, Screen, Subtitle, Title } from "@/components/UI";
 import { useAddFriend } from "@/db/hooks/mutations";
 import { useFetchFriends, useFetchUser } from "@/db/hooks/queries";
 import { useState } from "react";
-import { Alert } from "react-native";
+import { Alert, FlatList, Share } from "react-native";
 
 export default function Index() {
-   const [friendId, setFriendId] = useState("");
+   const [inviteCode, setInviteCode] = useState("");
    const { data: userData } = useFetchUser();
    const { mutateAsync: addFriend, isPending: isAddingFriend } = useAddFriend();
    const { data: friends, isPending, error } = useFetchFriends();
@@ -26,20 +26,42 @@ export default function Index() {
    }
 
    const handleAddFriend = async () => {
-      const normalizedFriendId = friendId.trim();
-      if (!normalizedFriendId) {
+      const normalizedInviteCode = inviteCode.trim();
+      if (!normalizedInviteCode) {
          Alert.alert("Error", "Please enter a friend ID.");
          return;
       }
 
       try {
-         const friendName = await addFriend(normalizedFriendId);
+         const friendName = await addFriend(normalizedInviteCode);
          Alert.alert("Friend Added", `You are now friends with ${friendName}.`);
-         setFriendId("");
+         setInviteCode("");
       } catch (error) {
          const message =
             error instanceof Error ? error.message : "Please try again.";
          Alert.alert("Add Friend Failed", message);
+      }
+   };
+
+   const handleShareInviteCode = async () => {
+      const code = userData.invite_code;
+
+      if (!code) {
+         Alert.alert(
+            "Invite Code Unavailable",
+            "Please try again in a moment.",
+         );
+         return;
+      }
+
+      try {
+         await Share.share({
+            message: `Add me on Hue Chooser with my invite code: ${code}`,
+         });
+      } catch (error) {
+         const message =
+            error instanceof Error ? error.message : "Please try again.";
+         Alert.alert("Share Failed", message);
       }
    };
 
@@ -52,16 +74,33 @@ export default function Index() {
 
             <InputGroup
                label="Friend ID"
-               placeholder="Enter friend UUID"
+               placeholder="Enter friend Code"
                autoCapitalize="none"
                autoCorrect={false}
-               value={friendId}
-               onChangeText={(value) => setFriendId(value.replace(/\s/g, ""))}
+               value={inviteCode}
+               onChangeText={(value) => setInviteCode(value.replace(/\s/g, ""))}
             />
             <Button
                title={isAddingFriend ? "Adding Friend..." : "Add Friend"}
                onPress={handleAddFriend}
                disabled={isAddingFriend}
+            />
+            <Button
+               title={"Share friendship Code"}
+               onPress={handleShareInviteCode}
+               disabled={!userData.invite_code}
+            />
+            <FlatList
+               data={friends}
+               keyExtractor={(friend) => friend.id}
+               renderItem={({ item }) => <Body>{item.name}</Body>}
+               ListEmptyComponent={
+                  isPending ? (
+                     <Body>Loading...</Body>
+                  ) : (
+                     <Body>You have no friends</Body>
+                  )
+               }
             />
          </Card>
       </Screen>

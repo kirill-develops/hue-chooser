@@ -105,23 +105,31 @@ export type Database = {
           },
         ]
       }
-      movies: {
+      invite_codes: {
         Row: {
-          description: string
-          id: number
-          name: string
+          code: string
+          created_at: string
+          user_id: string
         }
         Insert: {
-          description: string
-          id?: number
-          name: string
+          code?: string
+          created_at?: string
+          user_id: string
         }
         Update: {
-          description?: string
-          id?: number
-          name?: string
+          code?: string
+          created_at?: string
+          user_id?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "invite_codes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       users: {
         Row: {
@@ -146,7 +154,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      add_friend: { Args: { friend_id: string }; Returns: string }
+      add_friend: { Args: { code_id: string }; Returns: string }
     }
     Enums: {
       [_ in never]: never
