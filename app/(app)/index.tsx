@@ -37,6 +37,7 @@ export default function Index() {
             <Subtitle>{`Welcome back, ${userData.name}!`}</Subtitle>
             <CardRow>
                <Link href="/profile">Go to Dashboard</Link>
+               <Link href="/ColorWheelPicker">Select Color</Link>
             </CardRow>
             <Button
                title="Sign out"
