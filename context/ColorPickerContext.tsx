@@ -79,7 +79,7 @@ export function ColorPickerProvider({ children }: ColorPickerProviderProps) {
          return {
             ok: true,
             title: "Color Updated",
-            message: `${hexColor} saved on your profile`,
+            message: `${hexColor} saved to your profile`,
          };
       } catch (error) {
          const message =

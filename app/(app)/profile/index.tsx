@@ -9,7 +9,7 @@ export default function Index() {
    const [inviteCode, setInviteCode] = useState("");
    const { data: userData } = useFetchUser();
    const { mutateAsync: addFriend, isPending: isAddingFriend } = useAddFriend();
-   const { data: friends, isPending, error } = useFetchFriends();
+   const { data: friendsData, isPending, error } = useFetchFriends();
 
    if (!userData) {
       return <LoadingScreen />;
@@ -17,7 +17,7 @@ export default function Index() {
 
    const pendingMessage = isPending
       ? "Loading friends..."
-      : `Friends: ${friends?.length ?? 0}`;
+      : `Friends: ${friendsData?.length ?? 0}`;
 
    if (error) {
       const message =
@@ -91,7 +91,7 @@ export default function Index() {
                disabled={!userData.invite_code}
             />
             <FlatList
-               data={friends}
+               data={friendsData}
                keyExtractor={(friend) => friend.id}
                renderItem={({ item }) => <Body>{item.name}</Body>}
                ListEmptyComponent={

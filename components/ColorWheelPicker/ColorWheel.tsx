@@ -62,7 +62,7 @@ export function ColorWheel() {
                r={SELECTOR_RADIUS}
                fill={hexColor}
                stroke={selectorBorder}
-               strokeWidth={3}
+               strokeWidth={2.5}
             />
          </Svg>
       </View>
