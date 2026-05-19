@@ -4,7 +4,11 @@ export async function fetchFriends(id: string) {
    const { data, error } = await supabase
       .from("friend_edges")
       .select("friend:users!friend_id(*, color_history(color, created_at))")
-      .eq("user_id", id);
+      .eq("user_id", id)
+      .order("created_at", {
+         referencedTable: "friend.color_history",
+         ascending: false,
+      });
 
    if (error) {
       throw new Error("Failed to fetch user data: " + error.message);
