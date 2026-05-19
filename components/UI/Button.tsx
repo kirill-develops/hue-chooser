@@ -16,6 +16,7 @@ type ButtonProps = PressableProps & {
    title: string;
    variant?: "primary" | "secondary" | "social" | "socialAlt" | "link";
    href?: Href;
+   textColor?: StyleProp<TextStyle>;
 };
 
 export default function Button({
@@ -23,6 +24,7 @@ export default function Button({
    title,
    variant = "primary",
    href,
+   textColor,
    ...props
 }: ButtonProps) {
    const styles = makeStyles(useTheme());
@@ -30,6 +32,7 @@ export default function Button({
       styles,
       variant,
       style,
+      textColor,
    );
 
    const content = <Text style={textStyles}>{title}</Text>;
@@ -60,11 +63,16 @@ const getButtonVariantStyles = (
    styles: ReturnType<typeof makeStyles>,
    variant: "primary" | "secondary" | "social" | "socialAlt" | "link",
    style?: PressableProps["style"],
+   textColor?: StyleProp<TextStyle>,
 ) => {
    const { button, text, pressed } = getVariantStyles(styles)[variant];
 
    const buttonStyles: StyleProp<ViewStyle>[] = [styles.buttonBase, button];
-   const textStyles: StyleProp<TextStyle>[] = [styles.buttonText, text];
+   const textStyles: StyleProp<TextStyle>[] = [
+      styles.buttonText,
+      text,
+      textColor ?? null,
+   ];
 
    const combinedButtonStyle = (state: PressableStateCallbackType) =>
       [
@@ -81,6 +89,8 @@ export function makeStyles(theme: Theme) {
       buttonBase: {
          borderRadius: theme.borderRadius.button,
          alignItems: "center",
+         justifyContent: "center",
+         paddingVertical: 0,
       },
       primaryButton: {
          backgroundColor: theme.colors.primary,

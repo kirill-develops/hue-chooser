@@ -1,9 +1,10 @@
 import { InputGroup, LoadingScreen } from "@/components";
+import FriendList from "@/components/FriendList";
 import { Body, Button, Card, Screen, Subtitle, Title } from "@/components/UI";
 import { useAddFriend } from "@/db/hooks/mutations";
 import { useFetchFriends, useFetchUser } from "@/db/hooks/queries";
 import { useState } from "react";
-import { Alert, FlatList, Share } from "react-native";
+import { Alert, Share } from "react-native";
 
 export default function Index() {
    const [inviteCode, setInviteCode] = useState("");
@@ -68,9 +69,9 @@ export default function Index() {
    return (
       <Screen>
          <Card>
-            <Title>Welcome back</Title>
+            <Title>Friend Dashboard</Title>
             <Subtitle>{`Welcome back, ${userData.name}!`}</Subtitle>
-            <Subtitle>{pendingMessage}</Subtitle>
+            <Body>{pendingMessage}</Body>
 
             <InputGroup
                label="Friend ID"
@@ -90,17 +91,9 @@ export default function Index() {
                onPress={handleShareInviteCode}
                disabled={!userData.invite_code}
             />
-            <FlatList
-               data={friendsData}
-               keyExtractor={(friend) => friend.id}
-               renderItem={({ item }) => <Body>{item.name}</Body>}
-               ListEmptyComponent={
-                  isPending ? (
-                     <Body>Loading...</Body>
-                  ) : (
-                     <Body>You have no friends</Body>
-                  )
-               }
+            <FriendList
+               friendsData={friendsData}
+               isPending={isPending}
             />
          </Card>
       </Screen>

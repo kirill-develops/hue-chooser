@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View } from "react-native";
 
 interface ColorSwatchProps {
-   color: string;
+   color: string | undefined;
 }
 
 export function ColorSwatch({ color }: ColorSwatchProps) {

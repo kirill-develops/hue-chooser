@@ -17,14 +17,12 @@ import { Alert, StyleSheet } from "react-native";
 
 export default function Index() {
    const { logout } = useAuth();
-   const { data: userData } = useFetchUser();
+   const { data: userData, isFetching, isError, error } = useFetchUser();
    const styles = makeStyles(useTheme());
 
-   if (!userData) {
-      return <LoadingScreen />;
-   }
+   if (isFetching) return <LoadingScreen />;
 
-   const latestColor = userData.color_history[0].color;
+   const latestColor = userData?.color_history[0]?.color ?? null;
 
    const handleSignOut = async () => {
       try {
@@ -39,40 +37,49 @@ export default function Index() {
    return (
       <Screen>
          <Card>
-            <CardRow
-               variant="row"
-               style={styles.titleRow}
-            >
-               <ColorSwatch color={latestColor} />
-               <CardRow
-                  variant="column"
-                  style={styles.innerTitleRow}
-               >
-                  <Title>Hue Chooser</Title>
-                  <Subtitle
-                     style={styles.subtitle}
-                  >{`Welcome back, ${userData.name}!`}</Subtitle>
+            {isError ? (
+               <CardRow>
+                  <Title>Page Error</Title>
+                  <Subtitle>{error.message}</Subtitle>
                </CardRow>
-            </CardRow>
-            <CardRow variant="column">
-               <Button
-                  title={"Go to Dashboard"}
-                  variant="social"
-                  href="/profile"
-               />
-               <Button
-                  title={"Select Color"}
-                  href="/ColorWheelPicker"
-               />
-               <Button
-                  title="Sign out"
-                  onPress={handleSignOut}
-                  variant="secondary"
-               />
-            </CardRow>
-            <CardRow>
-               <Link href="/about">About Hue Chooser</Link>
-            </CardRow>
+            ) : (
+               <>
+                  <CardRow
+                     variant="row"
+                     style={styles.titleRow}
+                  >
+                     {latestColor && <ColorSwatch color={latestColor} />}
+                     <CardRow
+                        variant="column"
+                        style={styles.innerTitleRow}
+                     >
+                        <Title>Hue Chooser</Title>
+                        <Subtitle
+                           style={styles.subtitle}
+                        >{`Welcome back, ${userData?.name}!`}</Subtitle>
+                     </CardRow>
+                  </CardRow>
+                  <CardRow variant="column">
+                     <Button
+                        title={"Go to Dashboard"}
+                        variant="social"
+                        href="/profile"
+                     />
+                     <Button
+                        title={"Select Color"}
+                        href="/ColorWheelPicker"
+                     />
+                     <Button
+                        title="Sign out"
+                        onPress={handleSignOut}
+                        variant="secondary"
+                     />
+                  </CardRow>
+                  <CardRow>
+                     <Link href="/about">About Hue Chooser</Link>
+                  </CardRow>
+               </>
+            )}
          </Card>
       </Screen>
    );
