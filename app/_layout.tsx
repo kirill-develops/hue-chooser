@@ -1,3 +1,4 @@
+import { LoadingScreen } from "@/components";
 import { AuthProvider, useAuth } from "@/context/AuthContext";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -31,7 +32,7 @@ const App = () => {
    const { session, isSessionLoading } = useAuth();
 
    if (isSessionLoading) {
-      return null;
+      return <LoadingScreen />;
    }
 
    return (

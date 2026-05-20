@@ -1,12 +1,13 @@
 import { useTheme } from "@/context/ThemeContext";
 import { Theme } from "@/theme";
-import { StyleSheet, View, ViewProps } from "react-native";
+import { StyleSheet, ViewProps } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Screen({ style, ...props }: ViewProps) {
    const styles = makeStyles(useTheme());
 
    return (
-      <View
+      <SafeAreaView
          style={[styles.screen, style]}
          {...props}
       />

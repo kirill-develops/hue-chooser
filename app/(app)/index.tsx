@@ -63,7 +63,12 @@ export default function Index() {
                      <Button
                         title={"Go to Dashboard"}
                         variant="social"
-                        href="/profile"
+                        href="/dashboard"
+                     />
+                     <Button
+                        title={"Go to Color History"}
+                        variant="social"
+                        href="/color-history"
                      />
                      <Button
                         title={"Select Color"}

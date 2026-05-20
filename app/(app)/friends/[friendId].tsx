@@ -1,71 +1,43 @@
 import { LoadingScreen } from "@/components";
-import { ColorSwatch } from "@/components/ColorWheelPicker";
-import { Card, CardRow, Screen, Subtitle, Title } from "@/components/UI";
-import { useTheme } from "@/context/ThemeContext";
+import ColorHistoryList from "@/components/ColorHistoryList";
+import { Card, Screen, Subtitle, Title } from "@/components/UI";
 import { useFetchFriends } from "@/db/hooks/queries";
-import { Theme } from "@/theme";
 import { useLocalSearchParams } from "expo-router";
-import { StyleSheet } from "react-native";
 
 export default function FriendPage() {
    const { friendId } = useLocalSearchParams();
-   const { data: friendData, isFetching } = useFetchFriends();
-   const styles = makeStyles(useTheme());
+   const { data: friendData, isFetching, isError, error } = useFetchFriends();
 
    if (isFetching) return <LoadingScreen />;
 
    const friend = friendData?.find((f) => f.id === friendId);
 
-   if (!friend)
+   if (isError || !friend) {
+      const message =
+         error instanceof Error ? error.message : "Please try again";
+
       return (
          <Screen>
             <Card>
-               <Title>Couldn&apos;t Find Friend</Title>
-               <Subtitle>Please try again</Subtitle>
+               <Title>Page Error</Title>
+               <Subtitle>Couldn&apos;t Find Friend</Subtitle>
+               <Subtitle>{message}</Subtitle>
             </Card>
          </Screen>
       );
+   }
 
-   const latestColor = friend.color_history[0]?.color ?? null;
-   const totalColors = friend.color_history.length;
+   const { name, color_history: colorHistory } = friend;
+   const totalColors = colorHistory.length;
    const colorString = totalColors === 1 ? "color" : "colors";
 
    return (
       <Screen>
          <Card>
-            <CardRow
-               variant="row"
-               style={styles.titleRow}
-            >
-               {latestColor && <ColorSwatch color={latestColor} />}
-               <CardRow
-                  variant="column"
-                  style={styles.innerTitleRow}
-               >
-                  <Title>{friend.name}</Title>
-                  <Subtitle>
-                     has {totalColors} {colorString} saved
-                  </Subtitle>
-               </CardRow>
-            </CardRow>
+            <Title>{name}&apos;s Color History</Title>
+            <Subtitle>{`has ${totalColors} ${colorString} saved`}</Subtitle>
+            <ColorHistoryList colorHistory={colorHistory} />
          </Card>
       </Screen>
    );
-}
-
-function makeStyles(theme: Theme) {
-   return StyleSheet.create({
-      titleRow: {
-         justifyContent: "flex-start",
-         alignItems: "flex-start",
-         gap: 12,
-         marginBottom: theme.spacing.marginBottomSubtitle,
-      },
-      innerTitleRow: {
-         gap: 0,
-      },
-      subtitle: {
-         marginBottom: 0,
-      },
-   });
 }
