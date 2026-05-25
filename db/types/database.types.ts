@@ -12,33 +12,55 @@ export type Database = {
   __InternalSupabase: {
     PostgrestVersion: "14.5"
   }
-  graphql_public: {
-    Tables: {
-      [_ in never]: never
-    }
-    Views: {
-      [_ in never]: never
-    }
-    Functions: {
-      graphql: {
-        Args: {
-          extensions?: Json
-          operationName?: string
-          query?: string
-          variables?: Json
-        }
-        Returns: Json
-      }
-    }
-    Enums: {
-      [_ in never]: never
-    }
-    CompositeTypes: {
-      [_ in never]: never
-    }
-  }
   public: {
     Tables: {
+      blocked_users: {
+        Row: {
+          blocked_user_id: string
+          blocker_id: string
+          created_at: string
+        }
+        Insert: {
+          blocked_user_id: string
+          blocker_id: string
+          created_at?: string
+        }
+        Update: {
+          blocked_user_id?: string
+          blocker_id?: string
+          created_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blocked_users_blocked_user_id_fkey"
+            columns: ["blocked_user_id"]
+            isOneToOne: false
+            referencedRelation: "friends"
+            referencedColumns: ["friend_id"]
+          },
+          {
+            foreignKeyName: "blocked_users_blocked_user_id_fkey"
+            columns: ["blocked_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "blocked_users_blocker_id_fkey"
+            columns: ["blocker_id"]
+            isOneToOne: false
+            referencedRelation: "friends"
+            referencedColumns: ["friend_id"]
+          },
+          {
+            foreignKeyName: "blocked_users_blocker_id_fkey"
+            columns: ["blocker_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       color_history: {
         Row: {
           color: string
@@ -59,6 +81,13 @@ export type Database = {
           user_id?: string
         }
         Relationships: [
+          {
+            foreignKeyName: "color_history_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "friends"
+            referencedColumns: ["friend_id"]
+          },
           {
             foreignKeyName: "color_history_user_id_fkey"
             columns: ["user_id"]
@@ -89,8 +118,22 @@ export type Database = {
             foreignKeyName: "friend_edges_friend_id_fkey"
             columns: ["friend_id"]
             isOneToOne: false
+            referencedRelation: "friends"
+            referencedColumns: ["friend_id"]
+          },
+          {
+            foreignKeyName: "friend_edges_friend_id_fkey"
+            columns: ["friend_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "friend_edges_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "friends"
+            referencedColumns: ["friend_id"]
           },
           {
             foreignKeyName: "friend_edges_user_id_fkey"
@@ -122,8 +165,22 @@ export type Database = {
             foreignKeyName: "friendships_user_high_fkey"
             columns: ["user_high"]
             isOneToOne: false
+            referencedRelation: "friends"
+            referencedColumns: ["friend_id"]
+          },
+          {
+            foreignKeyName: "friendships_user_high_fkey"
+            columns: ["user_high"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "friendships_user_low_fkey"
+            columns: ["user_low"]
+            isOneToOne: false
+            referencedRelation: "friends"
+            referencedColumns: ["friend_id"]
           },
           {
             foreignKeyName: "friendships_user_low_fkey"
@@ -155,6 +212,60 @@ export type Database = {
             foreignKeyName: "invite_codes_user_id_fkey"
             columns: ["user_id"]
             isOneToOne: true
+            referencedRelation: "friends"
+            referencedColumns: ["friend_id"]
+          },
+          {
+            foreignKeyName: "invite_codes_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: true
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      reported_users: {
+        Row: {
+          created_at: string
+          reported_user_id: string
+          reporter_id: string
+        }
+        Insert: {
+          created_at?: string
+          reported_user_id: string
+          reporter_id: string
+        }
+        Update: {
+          created_at?: string
+          reported_user_id?: string
+          reporter_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "reported_users_reported_user_id_fkey"
+            columns: ["reported_user_id"]
+            isOneToOne: false
+            referencedRelation: "friends"
+            referencedColumns: ["friend_id"]
+          },
+          {
+            foreignKeyName: "reported_users_reported_user_id_fkey"
+            columns: ["reported_user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "reported_users_reporter_id_fkey"
+            columns: ["reporter_id"]
+            isOneToOne: false
+            referencedRelation: "friends"
+            referencedColumns: ["friend_id"]
+          },
+          {
+            foreignKeyName: "reported_users_reporter_id_fkey"
+            columns: ["reporter_id"]
+            isOneToOne: false
             referencedRelation: "users"
             referencedColumns: ["id"]
           },
@@ -180,7 +291,32 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      friends: {
+        Row: {
+          email: string | null
+          friend_id: string | null
+          is_blocked: boolean | null
+          is_reported: boolean | null
+          name: string | null
+          user_id: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "friend_edges_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "friends"
+            referencedColumns: ["friend_id"]
+          },
+          {
+            foreignKeyName: "friend_edges_user_id_fkey"
+            columns: ["user_id"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
       add_friend: { Args: { code_id: string }; Returns: string }
@@ -312,9 +448,6 @@ export type CompositeTypes<
     : never
 
 export const Constants = {
-  graphql_public: {
-    Enums: {},
-  },
   public: {
     Enums: {},
   },

@@ -16,7 +16,7 @@ export default function FriendList({
    return (
       <FlatList
          data={friendsData}
-         keyExtractor={(friend) => friend.id}
+         keyExtractor={(friend) => friend.friend_id}
          renderItem={({ item }) => <FriendItem friendData={item} />}
          ListEmptyComponent={
             <Body>{isPending ? "Loading..." : "You have no friends"}</Body>
@@ -37,15 +37,16 @@ type FriendItemProps = {
 };
 
 function FriendItem({ friendData }: FriendItemProps) {
-   const { name, color_history, id } = friendData;
+   const { name, color_history, friend_id } = friendData;
    const { color } = color_history[0] ?? {};
    const fontColorVariant = getFontColorVariant(color);
+   console.log(friendData.friend_id);
 
    return (
       <Button
          title={name}
          textColor={color && { color: fontColorVariant }}
-         href={`/friends/${id}`}
+         href={`/friends/${friend_id}`}
          style={{
             backgroundColor: color && color,
             height: 40,

@@ -1,4 +1,4 @@
-import { Database } from "@/db/types/database.types";
+import { Database } from "@/db/types/";
 import { createClient } from "@supabase/supabase-js";
 import { deleteItemAsync, getItemAsync, setItemAsync } from "expo-secure-store";
 
