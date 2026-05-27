@@ -3,8 +3,13 @@ import { Database as DatabaseGenerated, Tables } from "./database.types";
 
 type ColorHistory = Tables<"color_history">;
 
-export type Friend = Tables<"friends"> & {
-   color_history: Pick<ColorHistory, "color" | "created_at">[];
+type FriendBase = {
+   user_id: string;
+   friend_id: string;
+   name: string;
+   email: string;
+   is_reported: boolean;
+   is_blocked: boolean;
 };
 
 export type Database = MergeDeep<
@@ -13,16 +18,13 @@ export type Database = MergeDeep<
       public: {
          Views: {
             friends: {
-               Row: {
-                  user_id: string;
-                  friend_id: string;
-                  name: string;
-                  email: string;
-                  is_reported: boolean;
-                  is_blocked: boolean;
-               };
+               Row: FriendBase;
             };
          };
       };
    }
 >;
+
+export type Friend = Database["public"]["Views"]["friends"]["Row"] & {
+   color_history: Pick<ColorHistory, "color" | "created_at">[];
+};

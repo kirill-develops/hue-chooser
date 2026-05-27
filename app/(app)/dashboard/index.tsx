@@ -1,6 +1,13 @@
 import { InputGroup, LoadingScreen } from "@/components";
 import FriendList from "@/components/FriendList";
-import { Body, Button, Card, Screen, Subtitle, Title } from "@/components/UI";
+import {
+   Button,
+   Card,
+   CardRow,
+   Screen,
+   Subtitle,
+   Title,
+} from "@/components/UI";
 import { useAddFriend } from "@/db/hooks/mutations";
 import { useFetchFriends, useFetchUser } from "@/db/hooks/queries";
 import { useState } from "react";
@@ -15,10 +22,6 @@ export default function Index() {
    if (!userData) {
       return <LoadingScreen />;
    }
-
-   const pendingMessage = isPending
-      ? "Loading friends..."
-      : `Friends: ${friendsData?.length ?? 0}`;
 
    if (error) {
       const message =
@@ -71,8 +74,17 @@ export default function Index() {
          <Card>
             <Title>Friend Dashboard</Title>
             <Subtitle>{`Welcome back, ${userData.name}!`}</Subtitle>
-            <Body>{pendingMessage}</Body>
-
+            <Button
+               title={"Color History"}
+               variant="social"
+               href="/color-history"
+            />
+            <CardRow>
+               <FriendList
+                  friendsData={friendsData}
+                  isPending={isPending}
+               />
+            </CardRow>
             <InputGroup
                label="Friend ID"
                placeholder="Enter friend Code"
@@ -81,6 +93,7 @@ export default function Index() {
                value={inviteCode}
                onChangeText={(value) => setInviteCode(value.replace(/\s/g, ""))}
             />
+
             <Button
                title={isAddingFriend ? "Adding Friend..." : "Add Friend"}
                onPress={handleAddFriend}
@@ -90,10 +103,6 @@ export default function Index() {
                title={"Share friendship Code"}
                onPress={handleShareInviteCode}
                disabled={!userData.invite_code}
-            />
-            <FriendList
-               friendsData={friendsData}
-               isPending={isPending}
             />
          </Card>
       </Screen>

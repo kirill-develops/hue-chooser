@@ -1,3 +1,4 @@
+import { useTheme } from "@/context/ThemeContext";
 import { Friend } from "@/db/types";
 import { getFontColorVariant } from "@/lib/getFontColorVariant";
 import React from "react";
@@ -37,10 +38,11 @@ type FriendItemProps = {
 };
 
 function FriendItem({ friendData }: FriendItemProps) {
+   const theme = useTheme();
    const { name, color_history, friend_id } = friendData;
-   const { color } = color_history[0] ?? {};
+   const color = color_history[0]?.color ?? theme.colors.card;
+
    const fontColorVariant = getFontColorVariant(color);
-   console.log(friendData.friend_id);
 
    return (
       <Button
@@ -48,9 +50,12 @@ function FriendItem({ friendData }: FriendItemProps) {
          textColor={color && { color: fontColorVariant }}
          href={`/friends/${friend_id}`}
          style={{
-            backgroundColor: color && color,
+            backgroundColor: color,
             height: 40,
             paddingVertical: 0,
+            borderWidth: 1,
+            borderColor:
+               color === theme.colors.card ? theme.colors.text : color,
          }}
       />
    );
