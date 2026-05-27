@@ -48,7 +48,7 @@ function FriendItem({ friendData }: FriendItemProps) {
       <Button
          title={name}
          textColor={color && { color: fontColorVariant }}
-         href={`/friends/${friend_id}`}
+         href={`/${friend_id}`}
          style={{
             backgroundColor: color,
             height: 40,

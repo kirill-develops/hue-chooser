@@ -56,23 +56,14 @@ export default function Index() {
                         <Title>Hue Chooser</Title>
                         <Subtitle
                            style={styles.subtitle}
-                        >{`Welcome back, ${userData?.name}!`}</Subtitle>
+                        >{`${userData?.name}`}</Subtitle>
                      </CardRow>
                   </CardRow>
                   <CardRow variant="column">
                      <Button
-                        title={"Go to Dashboard"}
+                        title={"Color History"}
                         variant="social"
-                        href="/dashboard"
-                     />
-                     <Button
-                        title={"Go to Color History"}
-                        variant="social"
-                        href="/color-history"
-                     />
-                     <Button
-                        title={"Select Color"}
-                        href="/ColorWheelPicker"
+                        href="/profile/color-history"
                      />
                      <Button
                         title="Sign out"

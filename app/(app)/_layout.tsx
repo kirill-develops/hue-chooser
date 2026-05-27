@@ -1,12 +1,21 @@
-import { Stack } from "expo-router";
+import { Tabs } from "expo-router";
 
 export default function AppLayout() {
    return (
-      <Stack>
-         <Stack.Screen
-            name="index"
-            options={{ headerShown: false }}
+      <Tabs screenOptions={{ headerShown: false }}>
+         <Tabs.Screen
+            options={{ title: "Color Picker" }}
+            name="color-picker"
          />
-      </Stack>
+         <Tabs.Screen
+            options={{ title: "Home" }}
+            name="(home)"
+         />
+
+         <Tabs.Screen
+            options={{ title: "Profile" }}
+            name="profile"
+         />
+      </Tabs>
    );
 }

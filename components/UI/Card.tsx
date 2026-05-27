@@ -16,6 +16,7 @@ export default function Card({ style, ...props }: ViewProps) {
 function makeStyles(theme: Theme) {
    return StyleSheet.create({
       card: {
+         marginTop: "auto",
          backgroundColor: theme.colors.card,
          borderRadius: theme.borderRadius.card,
          padding: theme.spacing.cardPadding,

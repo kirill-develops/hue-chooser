@@ -25,7 +25,7 @@ function ColorWheelPickerInner() {
       if (result.ok) {
          Alert.alert(result.title, result.message, [
             {
-               onPress: () => router.back(),
+               onPress: () => router.push("/"),
             },
          ]);
       }

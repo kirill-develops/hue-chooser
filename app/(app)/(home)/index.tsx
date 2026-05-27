@@ -74,12 +74,7 @@ export default function Index() {
          <Card>
             <Title>Friend Dashboard</Title>
             <Subtitle>{`Welcome back, ${userData.name}!`}</Subtitle>
-            <Button
-               title={"Color History"}
-               variant="social"
-               href="/color-history"
-            />
-            <CardRow>
+            <CardRow variant="column">
                <FriendList
                   friendsData={friendsData}
                   isPending={isPending}

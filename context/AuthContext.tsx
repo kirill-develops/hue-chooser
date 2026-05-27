@@ -21,6 +21,15 @@ type AuthContextType = {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+function isMissingUserError(error: unknown) {
+   return (
+      error instanceof Error &&
+      error.message.includes(
+         "JSON object requested, multiple (or no) rows returned",
+      )
+   );
+}
+
 export function AuthProvider({ children }: { children: ReactNode }) {
    const [session, setSession] = useState<Session | null>(null);
    const [isSessionLoading, setIsSessionLoading] = useState(true);
@@ -34,10 +43,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
          setTimeout(async () => {
             if (currentSession) {
-               const user = await fetchUser(currentSession?.user.id);
-               queryClient.setQueryData(["user", currentSession.user.id], user);
+               try {
+                  const user = await fetchUser(currentSession?.user.id);
+                  queryClient.setQueryData(
+                     ["user", currentSession.user.id],
+                     user,
+                  );
 
-               setSession(currentSession);
+                  setSession(currentSession);
+               } catch (error) {
+                  if (!isMissingUserError(error)) {
+                     throw error;
+                  }
+
+                  setSession(null);
+                  queryClient.clear();
+                  await supabase.auth.signOut();
+               }
             } else {
                setSession(null);
                queryClient.clear();

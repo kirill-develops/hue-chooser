@@ -13,8 +13,8 @@ type SignInResult =
 export function usePublicSignInScreen() {
    const { login } = useAuth();
    const [form, setForm] = useState<SignInForm>({
-      email: "",
-      password: "",
+      email: "seed-user-01@example.com",
+      password: "123456",
    });
 
    const handleFormUpdate = (field: keyof SignInForm) => (value: string) => {
